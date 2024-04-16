@@ -1,0 +1,199 @@
+{
+    "all_nodes": {
+        "4176": {
+            "addr": 4176,
+            "size": 37,
+            "name": "_start",
+            "function_address": 4176,
+            "instructions": [
+                "0x1050:\tendbr64\t",
+                "0x1054:\txor\tebp, ebp",
+                "0x1056:\tmov\tr9, rdx",
+                "0x1059:\tpop\trsi",
+                "0x105a:\tmov\trdx, rsp",
+                "0x105d:\tand\trsp, 0xfffffffffffffff0",
+                "0x1061:\tpush\trax",
+                "0x1062:\tpush\trsp",
+                "0x1063:\txor\tr8d, r8d",
+                "0x1066:\txor\tecx, ecx",
+                "0x1068:\tlea\trdi, [rip + 0xd1]",
+                "0x106f:\tcall\tqword ptr [rip + 0x2f63]"
+            ],
+            "successors": [
+                [
+                    1048576,
+                    "Ijk_Call"
+                ]
+            ],
+            "predecessors": []
+        },
+        "4096": {
+            "addr": 4096,
+            "size": 20,
+            "name": "_init",
+            "function_address": 4096,
+            "instructions": [
+                "0x1000:\tendbr64\t",
+                "0x1004:\tsub\trsp, 8",
+                "0x1008:\tmov\trax, qword ptr [rip + 0x2fd9]",
+                "0x100f:\ttest\trax, rax",
+                "0x1012:\tje\t0x1016"
+            ],
+            "successors": [
+                [
+                    4118,
+                    "Ijk_Boring"
+                ],
+                [
+                    4116,
+                    "Ijk_Boring"
+                ]
+            ],
+            "predecessors": []
+        },
+        "4224": {
+            "addr": 4224,
+            "size": 19,
+            "name": "deregister_tm_clones",
+            "function_address": 4224,
+            "instructions": [
+                "0x1080:\tlea\trdi, [rip + 0x2fa9]",
+                "0x1087:\tlea\trax, [rip + 0x2fa2]",
+                "0x108e:\tcmp\trax, rdi",
+                "0x1091:\tje\t0x10a8"
+            ],
+            "successors": [
+                [
+                    4264,
+                    "Ijk_Boring"
+                ],
+                [
+                    4243,
+                    "Ijk_Boring"
+                ]
+            ],
+            "predecessors": [
+                [
+                    4375,
+                    "Ijk_Call"
+                ],
+                [
+                    4214,
+                    "Ijk_Boring"
+                ]
+            ]
+        }
+    },
+    "call_graph_edges": [
+        [
+            4224,
+            2101328,
+            "transition"
+        ],
+        [
+            4272,
+            2101328,
+            "transition"
+        ],
+        [
+            4096,
+            2101336,
+            "call"
+        ],
+        [
+            4140,
+            4144,
+            "transition"
+        ],
+        [
+            4144,
+            1048584,
+            "transition"
+        ],
+        [
+            4176,
+            1048576,
+            "call"
+        ],
+        [
+            1048576,
+            4416,
+            "call"
+        ],
+        [
+            4214,
+            4224,
+            "transition"
+        ],
+        [
+            4265,
+            4272,
+            "transition"
+        ],
+        [
+            4329,
+            4336,
+            "transition"
+        ],
+        [
+            4336,
+            4224,
+            "call"
+        ],
+        [
+            4336,
+            4160,
+            "call"
+        ],
+        [
+            4389,
+            4336,
+            "transition"
+        ],
+        [
+            4393,
+            4400,
+            "transition"
+        ],
+        [
+            4400,
+            4272,
+            "transition"
+        ],
+        [
+            4409,
+            4416,
+            "transition"
+        ],
+        [
+            4416,
+            4528,
+            "call"
+        ],
+        [
+            4416,
+            4496,
+            "call"
+        ],
+        [
+            4416,
+            4144,
+            "call"
+        ],
+        [
+            4528,
+            4144,
+            "call"
+        ],
+        [
+            4495,
+            4496,
+            "transition"
+        ],
+        [
+            4514,
+            4528,
+            "transition"
+        ]
+    ]
+}
