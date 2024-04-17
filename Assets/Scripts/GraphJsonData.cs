@@ -16,7 +16,7 @@ public class Node
     public string name;
     public int function_address;
     public List<string> instructions;
-    public List<Connection> successors; 
+    public List<Connection> successors;
     public List<Connection> predecessors;
 }
 
@@ -30,7 +30,7 @@ public class CallGraphEdge
 
 
 [Serializable]
-public class GraphObject
+public class ParsedJsonData
 {
     public Dictionary<string, Node> all_nodes;
     public List<CallGraphEdge> call_graph_edges;

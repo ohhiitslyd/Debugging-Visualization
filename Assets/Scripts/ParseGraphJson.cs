@@ -5,6 +5,8 @@ using Newtonsoft.Json.Linq;
 
 public class ParseGraphJson : MonoBehaviour
 {
+    public ParsedJsonData parsedJsonData;
+    public GraphStructure graphStructure;
     void Start()
     {
         LoadJsonData();
@@ -12,15 +14,28 @@ public class ParseGraphJson : MonoBehaviour
 
     private void LoadJsonData()
     {
-        TextAsset file = Resources.Load<TextAsset>("jsondata");
+        TextAsset file = Resources.Load<TextAsset>("angr_jsons/simple_debug__angr");
         if (file != null)
         {
             string modifiedJson = PreprocessJson(file.text);
             Debug.Log(modifiedJson);
-            GraphObject data = JsonConvert.DeserializeObject<GraphObject>(modifiedJson);
+            ParsedJsonData data = JsonConvert.DeserializeObject<ParsedJsonData>(modifiedJson);
             if (data != null)
             {
                 Debug.Log("JSON Data Loaded Successfully!");
+                parsedJsonData = data;
+                graphStructure = GraphStructure.ParsedJSONToGraph(data);
+
+                List<Connection> testsuc = graphStructure.getSuccessors(4096);
+                foreach (Connection c in testsuc)
+                {
+                    Debug.Log($"4096 has {c.type} successor with address {c.target}");
+                }
+                testsuc = graphStructure.getSuccessors(4243);
+                foreach (Connection c in testsuc)
+                {
+                    Debug.Log($"4243 has {c.type} successor with address {c.target}");
+                }
                 //Debug.Log(data);
                 //Debug.Log(data.all_nodes);
                 //Debug.Log(data.all_nodes["4096"].name);
