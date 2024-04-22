@@ -1,0 +1,1836 @@
+{
+  "all_nodes": {
+    "4192": {
+      "addr": 4192,
+      "size": 37,
+      "name": null,
+      "function_address": 4192,
+      "instructions": [
+        "0x1060:\tendbr64\t",
+        "0x1064:\txor\tebp, ebp",
+        "0x1066:\tmov\tr9, rdx",
+        "0x1069:\tpop\trsi",
+        "0x106a:\tmov\trdx, rsp",
+        "0x106d:\tand\trsp, 0xfffffffffffffff0",
+        "0x1071:\tpush\trax",
+        "0x1072:\tpush\trsp",
+        "0x1073:\txor\tr8d, r8d",
+        "0x1076:\txor\tecx, ecx",
+        "0x1078:\tlea\trdi, [rip + 0xd1]",
+        "0x107f:\tcall\tqword ptr [rip + 0x2f53]"
+      ],
+      "successors": [
+        [
+          1048576,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": []
+    },
+    "1048576": {
+      "addr": 1048576,
+      "size": 0,
+      "name": "__libc_start_main",
+      "function_address": 1048576,
+      "instructions": [],
+      "successors": [
+        [
+          4432,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          4192,
+          "Ijk_Call"
+        ]
+      ]
+    },
+    "4432": {
+      "addr": 4432,
+      "size": 29,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x1150:\tpush\trbp",
+        "0x1151:\tmov\trbp, rsp",
+        "0x1154:\tsub\trsp, 0x10",
+        "0x1158:\tmov\tdword ptr [rbp - 4], 0",
+        "0x115f:\tlea\trdi, [rip + 0xe9e]",
+        "0x1166:\tmov\tal, 0",
+        "0x1168:\tcall\t0x1030"
+      ],
+      "successors": [
+        [
+          4144,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          1048576,
+          "Ijk_Call"
+        ],
+        [
+          4425,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4144": {
+      "addr": 4144,
+      "size": 6,
+      "name": null,
+      "function_address": 4144,
+      "instructions": [
+        "0x1030:\tjmp\tqword ptr [rip + 0x2fe2]"
+      ],
+      "successors": [
+        [
+          1048584,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4432,
+          "Ijk_Call"
+        ],
+        [
+          4479,
+          "Ijk_Call"
+        ],
+        [
+          4551,
+          "Ijk_Call"
+        ],
+        [
+          4592,
+          "Ijk_Call"
+        ],
+        [
+          4520,
+          "Ijk_Call"
+        ],
+        [
+          4140,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "1048584": {
+      "addr": 1048584,
+      "size": 0,
+      "name": "printf",
+      "function_address": 1048584,
+      "instructions": [],
+      "successors": [
+        [
+          4565,
+          "Ijk_Ret"
+        ],
+        [
+          4609,
+          "Ijk_Ret"
+        ],
+        [
+          4493,
+          "Ijk_Ret"
+        ],
+        [
+          4461,
+          "Ijk_Ret"
+        ],
+        [
+          4537,
+          "Ijk_Ret"
+        ]
+      ],
+      "predecessors": [
+        [
+          4144,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4461": {
+      "addr": 4461,
+      "size": 18,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x116d:\tlea\trdi, [rip + 0xec3]",
+        "0x1174:\tlea\trsi, [rbp - 8]",
+        "0x1178:\tmov\tal, 0",
+        "0x117a:\tcall\t0x1040"
+      ],
+      "successors": [
+        [
+          4160,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          1048584,
+          "Ijk_Ret"
+        ]
+      ]
+    },
+    "4160": {
+      "addr": 4160,
+      "size": 6,
+      "name": null,
+      "function_address": 4160,
+      "instructions": [
+        "0x1040:\tjmp\tqword ptr [rip + 0x2fda]"
+      ],
+      "successors": [
+        [
+          1048592,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4461,
+          "Ijk_Call"
+        ]
+      ]
+    },
+    "1048592": {
+      "addr": 1048592,
+      "size": 0,
+      "name": "__isoc99_scanf",
+      "function_address": 1048592,
+      "instructions": [],
+      "successors": [
+        [
+          4479,
+          "Ijk_Ret"
+        ]
+      ],
+      "predecessors": [
+        [
+          4160,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4479": {
+      "addr": 4479,
+      "size": 14,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x117f:\tlea\trdi, [rip + 0xeb4]",
+        "0x1186:\tmov\tal, 0",
+        "0x1188:\tcall\t0x1030"
+      ],
+      "successors": [
+        [
+          4144,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          1048592,
+          "Ijk_Ret"
+        ]
+      ]
+    },
+    "4512": {
+      "addr": 4512,
+      "size": 8,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x11a0:\tmov\tedi, dword ptr [rbp - 0xc]",
+        "0x11a3:\tcall\t0x1220"
+      ],
+      "successors": [
+        [
+          4640,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          4500,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4551": {
+      "addr": 4551,
+      "size": 14,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x11c7:\tlea\trdi, [rip + 0xe9e]",
+        "0x11ce:\tmov\tal, 0",
+        "0x11d0:\tcall\t0x1030"
+      ],
+      "successors": [
+        [
+          4144,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          4500,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4640": {
+      "addr": 4640,
+      "size": 33,
+      "name": null,
+      "function_address": 4640,
+      "instructions": [
+        "0x1220:\tpush\trbp",
+        "0x1221:\tmov\trbp, rsp",
+        "0x1224:\tmov\tdword ptr [rbp - 0xc], edi",
+        "0x1227:\tmov\tqword ptr [rbp - 0x18], 0",
+        "0x122f:\tmov\tqword ptr [rbp - 0x20], 1",
+        "0x1237:\tcmp\tdword ptr [rbp - 0xc], 0",
+        "0x123b:\tjne\t0x124e"
+      ],
+      "successors": [
+        [
+          4673,
+          "Ijk_Boring"
+        ],
+        [
+          4686,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4512,
+          "Ijk_Call"
+        ],
+        [
+          4631,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4673": {
+      "addr": 4673,
+      "size": 13,
+      "name": null,
+      "function_address": 4640,
+      "instructions": [
+        "0x1241:\tmov\trax, qword ptr [rbp - 0x18]",
+        "0x1245:\tmov\tqword ptr [rbp - 8], rax",
+        "0x1249:\tjmp\t0x12af"
+      ],
+      "successors": [
+        [
+          4783,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4640,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4686": {
+      "addr": 4686,
+      "size": 10,
+      "name": null,
+      "function_address": 4640,
+      "instructions": [
+        "0x124e:\tcmp\tdword ptr [rbp - 0xc], 1",
+        "0x1252:\tjne\t0x1265"
+      ],
+      "successors": [
+        [
+          4696,
+          "Ijk_Boring"
+        ],
+        [
+          4709,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4640,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4783": {
+      "addr": 4783,
+      "size": 6,
+      "name": null,
+      "function_address": 4640,
+      "instructions": [
+        "0x12af:\tmov\trax, qword ptr [rbp - 8]",
+        "0x12b3:\tpop\trbp",
+        "0x12b4:\tret\t"
+      ],
+      "successors": [
+        [
+          4520,
+          "Ijk_Ret"
+        ]
+      ],
+      "predecessors": [
+        [
+          4673,
+          "Ijk_Boring"
+        ],
+        [
+          4696,
+          "Ijk_Boring"
+        ],
+        [
+          4775,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4696": {
+      "addr": 4696,
+      "size": 13,
+      "name": null,
+      "function_address": 4640,
+      "instructions": [
+        "0x1258:\tmov\trax, qword ptr [rbp - 0x20]",
+        "0x125c:\tmov\tqword ptr [rbp - 8], rax",
+        "0x1260:\tjmp\t0x12af"
+      ],
+      "successors": [
+        [
+          4783,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4686,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4709": {
+      "addr": 4709,
+      "size": 5,
+      "name": null,
+      "function_address": 4640,
+      "instructions": [
+        "0x1265:\tjmp\t0x126a"
+      ],
+      "successors": [
+        [
+          4714,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4686,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4733": {
+      "addr": 4733,
+      "size": 42,
+      "name": null,
+      "function_address": 4640,
+      "instructions": [
+        "0x127d:\tmov\trax, qword ptr [rbp - 0x18]",
+        "0x1281:\tadd\trax, qword ptr [rbp - 0x20]",
+        "0x1285:\tmov\tqword ptr [rbp - 0x28], rax",
+        "0x1289:\tmov\trax, qword ptr [rbp - 0x20]",
+        "0x128d:\tmov\tqword ptr [rbp - 0x18], rax",
+        "0x1291:\tmov\trax, qword ptr [rbp - 0x28]",
+        "0x1295:\tmov\tqword ptr [rbp - 0x20], rax",
+        "0x1299:\tmov\teax, dword ptr [rbp - 0x2c]",
+        "0x129c:\tadd\teax, 1",
+        "0x129f:\tmov\tdword ptr [rbp - 0x2c], eax",
+        "0x12a2:\tjmp\t0x1271"
+      ],
+      "successors": [
+        [
+          4721,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4721,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4721": {
+      "addr": 4721,
+      "size": 12,
+      "name": null,
+      "function_address": 4640,
+      "instructions": [
+        "0x1271:\tmov\teax, dword ptr [rbp - 0x2c]",
+        "0x1274:\tcmp\teax, dword ptr [rbp - 0xc]",
+        "0x1277:\tjg\t0x12a7"
+      ],
+      "successors": [
+        [
+          4733,
+          "Ijk_Boring"
+        ],
+        [
+          4775,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4733,
+          "Ijk_Boring"
+        ],
+        [
+          4714,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4584": {
+      "addr": 4584,
+      "size": 8,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x11e8:\tmov\tedi, dword ptr [rbp - 0x10]",
+        "0x11eb:\tcall\t0x12c0"
+      ],
+      "successors": [
+        [
+          4800,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          4572,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4623": {
+      "addr": 4623,
+      "size": 8,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x120f:\txor\teax, eax",
+        "0x1211:\tadd\trsp, 0x10",
+        "0x1215:\tpop\trbp",
+        "0x1216:\tret\t"
+      ],
+      "successors": [],
+      "predecessors": [
+        [
+          4572,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4800": {
+      "addr": 4800,
+      "size": 21,
+      "name": null,
+      "function_address": 4800,
+      "instructions": [
+        "0x12c0:\tpush\trbp",
+        "0x12c1:\tmov\trbp, rsp",
+        "0x12c4:\tsub\trsp, 0x20",
+        "0x12c8:\tmov\tdword ptr [rbp - 0xc], edi",
+        "0x12cb:\tcmp\tdword ptr [rbp - 0xc], 1",
+        "0x12cf:\tjg\t0x12e2"
+      ],
+      "successors": [
+        [
+          4821,
+          "Ijk_Boring"
+        ],
+        [
+          4834,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4584,
+          "Ijk_Call"
+        ],
+        [
+          4834,
+          "Ijk_Call"
+        ],
+        [
+          4845,
+          "Ijk_Call"
+        ],
+        [
+          4789,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4821": {
+      "addr": 4821,
+      "size": 13,
+      "name": null,
+      "function_address": 4800,
+      "instructions": [
+        "0x12d5:\tmovsxd\trax, dword ptr [rbp - 0xc]",
+        "0x12d9:\tmov\tqword ptr [rbp - 8], rax",
+        "0x12dd:\tjmp\t0x130a"
+      ],
+      "successors": [
+        [
+          4874,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4800,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4834": {
+      "addr": 4834,
+      "size": 11,
+      "name": null,
+      "function_address": 4800,
+      "instructions": [
+        "0x12e2:\tmov\tedi, dword ptr [rbp - 0xc]",
+        "0x12e5:\tsub\tedi, 1",
+        "0x12e8:\tcall\t0x12c0"
+      ],
+      "successors": [
+        [
+          4800,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          4800,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4874": {
+      "addr": 4874,
+      "size": 10,
+      "name": null,
+      "function_address": 4800,
+      "instructions": [
+        "0x130a:\tmov\trax, qword ptr [rbp - 8]",
+        "0x130e:\tadd\trsp, 0x20",
+        "0x1312:\tpop\trbp",
+        "0x1313:\tret\t"
+      ],
+      "successors": [
+        [
+          4860,
+          "Ijk_Ret"
+        ],
+        [
+          4592,
+          "Ijk_Ret"
+        ],
+        [
+          4845,
+          "Ijk_Ret"
+        ]
+      ],
+      "predecessors": [
+        [
+          4821,
+          "Ijk_Boring"
+        ],
+        [
+          4860,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4845": {
+      "addr": 4845,
+      "size": 15,
+      "name": null,
+      "function_address": 4800,
+      "instructions": [
+        "0x12ed:\tmov\tqword ptr [rbp - 0x18], rax",
+        "0x12f1:\tmov\tedi, dword ptr [rbp - 0xc]",
+        "0x12f4:\tsub\tedi, 2",
+        "0x12f7:\tcall\t0x12c0"
+      ],
+      "successors": [
+        [
+          4800,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          4874,
+          "Ijk_Ret"
+        ]
+      ]
+    },
+    "4592": {
+      "addr": 4592,
+      "size": 17,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x11f0:\tmov\trsi, rax",
+        "0x11f3:\tlea\trdi, [rip + 0xe6c]",
+        "0x11fa:\tmov\tal, 0",
+        "0x11fc:\tcall\t0x1030"
+      ],
+      "successors": [
+        [
+          4144,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          4874,
+          "Ijk_Ret"
+        ]
+      ]
+    },
+    "4609": {
+      "addr": 4609,
+      "size": 14,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x1201:\tmov\teax, dword ptr [rbp - 0x10]",
+        "0x1204:\tadd\teax, 1",
+        "0x1207:\tmov\tdword ptr [rbp - 0x10], eax",
+        "0x120a:\tjmp\t0x11dc"
+      ],
+      "successors": [
+        [
+          4572,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          1048584,
+          "Ijk_Ret"
+        ]
+      ]
+    },
+    "4572": {
+      "addr": 4572,
+      "size": 12,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x11dc:\tmov\teax, dword ptr [rbp - 0x10]",
+        "0x11df:\tcmp\teax, dword ptr [rbp - 8]",
+        "0x11e2:\tjge\t0x120f"
+      ],
+      "successors": [
+        [
+          4584,
+          "Ijk_Boring"
+        ],
+        [
+          4623,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4609,
+          "Ijk_Boring"
+        ],
+        [
+          4565,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4520": {
+      "addr": 4520,
+      "size": 17,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x11a8:\tmov\trsi, rax",
+        "0x11ab:\tlea\trdi, [rip + 0xeb4]",
+        "0x11b2:\tmov\tal, 0",
+        "0x11b4:\tcall\t0x1030"
+      ],
+      "successors": [
+        [
+          4144,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          4783,
+          "Ijk_Ret"
+        ]
+      ]
+    },
+    "4537": {
+      "addr": 4537,
+      "size": 14,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x11b9:\tmov\teax, dword ptr [rbp - 0xc]",
+        "0x11bc:\tadd\teax, 1",
+        "0x11bf:\tmov\tdword ptr [rbp - 0xc], eax",
+        "0x11c2:\tjmp\t0x1194"
+      ],
+      "successors": [
+        [
+          4500,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          1048584,
+          "Ijk_Ret"
+        ]
+      ]
+    },
+    "4500": {
+      "addr": 4500,
+      "size": 12,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x1194:\tmov\teax, dword ptr [rbp - 0xc]",
+        "0x1197:\tcmp\teax, dword ptr [rbp - 8]",
+        "0x119a:\tjge\t0x11c7"
+      ],
+      "successors": [
+        [
+          4512,
+          "Ijk_Boring"
+        ],
+        [
+          4551,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4537,
+          "Ijk_Boring"
+        ],
+        [
+          4493,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4096": {
+      "addr": 4096,
+      "size": 20,
+      "name": null,
+      "function_address": 4096,
+      "instructions": [
+        "0x1000:\tendbr64\t",
+        "0x1004:\tsub\trsp, 8",
+        "0x1008:\tmov\trax, qword ptr [rip + 0x2fd9]",
+        "0x100f:\ttest\trax, rax",
+        "0x1012:\tje\t0x1016"
+      ],
+      "successors": [
+        [
+          4118,
+          "Ijk_Boring"
+        ],
+        [
+          4116,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    },
+    "4118": {
+      "addr": 4118,
+      "size": 5,
+      "name": null,
+      "function_address": 4096,
+      "instructions": [
+        "0x1016:\tadd\trsp, 8",
+        "0x101a:\tret\t"
+      ],
+      "successors": [],
+      "predecessors": [
+        [
+          4096,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4116": {
+      "addr": 4116,
+      "size": 2,
+      "name": null,
+      "function_address": 4096,
+      "instructions": [
+        "0x1014:\tcall\trax"
+      ],
+      "successors": [
+        [
+          2101336,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          4096,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "2101336": {
+      "addr": 2101336,
+      "size": 0,
+      "name": "UnresolvableCallTarget",
+      "function_address": 2101336,
+      "instructions": [],
+      "successors": [],
+      "predecessors": [
+        [
+          4116,
+          "Ijk_Call"
+        ]
+      ]
+    },
+    "4884": {
+      "addr": 4884,
+      "size": 13,
+      "name": null,
+      "function_address": 4884,
+      "instructions": [
+        "0x1314:\tendbr64\t",
+        "0x1318:\tsub\trsp, 8",
+        "0x131c:\tadd\trsp, 8",
+        "0x1320:\tret\t"
+      ],
+      "successors": [],
+      "predecessors": []
+    },
+    "4128": {
+      "addr": 4128,
+      "size": 12,
+      "name": null,
+      "function_address": 4128,
+      "instructions": [
+        "0x1020:\tpush\tqword ptr [rip + 0x2fe2]",
+        "0x1026:\tjmp\tqword ptr [rip + 0x2fe4]"
+      ],
+      "successors": [],
+      "predecessors": [
+        [
+          4150,
+          "Ijk_Boring"
+        ],
+        [
+          4166,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4140": {
+      "addr": 4140,
+      "size": 4,
+      "name": null,
+      "function_address": 4140,
+      "instructions": [
+        "0x102c:\tnop\tdword ptr [rax]"
+      ],
+      "successors": [
+        [
+          4144,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    },
+    "4150": {
+      "addr": 4150,
+      "size": 10,
+      "name": null,
+      "function_address": 4150,
+      "instructions": [
+        "0x1036:\tpush\t0",
+        "0x103b:\tjmp\t0x1020"
+      ],
+      "successors": [
+        [
+          4128,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    },
+    "4166": {
+      "addr": 4166,
+      "size": 10,
+      "name": null,
+      "function_address": 4166,
+      "instructions": [
+        "0x1046:\tpush\t1",
+        "0x104b:\tjmp\t0x1020"
+      ],
+      "successors": [
+        [
+          4128,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    },
+    "4176": {
+      "addr": 4176,
+      "size": 6,
+      "name": null,
+      "function_address": 4176,
+      "instructions": [
+        "0x1050:\tjmp\tqword ptr [rip + 0x2fa2]"
+      ],
+      "successors": [],
+      "predecessors": [
+        [
+          4379,
+          "Ijk_Call"
+        ]
+      ]
+    },
+    "4182": {
+      "addr": 4182,
+      "size": 2,
+      "name": null,
+      "function_address": 4182,
+      "instructions": [
+        "0x1056:\tnop\t"
+      ],
+      "successors": [],
+      "predecessors": []
+    },
+    "4229": {
+      "addr": 4229,
+      "size": 1,
+      "name": null,
+      "function_address": 4229,
+      "instructions": [
+        "0x1085:\thlt\t"
+      ],
+      "successors": [],
+      "predecessors": []
+    },
+    "4280": {
+      "addr": 4280,
+      "size": 1,
+      "name": null,
+      "function_address": 4240,
+      "instructions": [
+        "0x10b8:\tret\t"
+      ],
+      "successors": [
+        [
+          4396,
+          "Ijk_Ret"
+        ]
+      ],
+      "predecessors": [
+        [
+          4259,
+          "Ijk_Boring"
+        ],
+        [
+          4240,
+          "Ijk_Boring"
+        ],
+        [
+          4273,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4259": {
+      "addr": 4259,
+      "size": 12,
+      "name": null,
+      "function_address": 4240,
+      "instructions": [
+        "0x10a3:\tmov\trax, qword ptr [rip + 0x2f36]",
+        "0x10aa:\ttest\trax, rax",
+        "0x10ad:\tje\t0x10b8"
+      ],
+      "successors": [
+        [
+          4280,
+          "Ijk_Boring"
+        ],
+        [
+          4271,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4240,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4271": {
+      "addr": 4271,
+      "size": 2,
+      "name": null,
+      "function_address": 4240,
+      "instructions": [
+        "0x10af:\tjmp\trax"
+      ],
+      "successors": [
+        [
+          2101328,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4259,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "2101328": {
+      "addr": 2101328,
+      "size": 0,
+      "name": "UnresolvableJumpTarget",
+      "function_address": 2101328,
+      "instructions": [],
+      "successors": [],
+      "predecessors": [
+        [
+          4271,
+          "Ijk_Boring"
+        ],
+        [
+          4336,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4344": {
+      "addr": 4344,
+      "size": 1,
+      "name": null,
+      "function_address": 4281,
+      "instructions": [
+        "0x10f8:\tret\t"
+      ],
+      "successors": [],
+      "predecessors": [
+        [
+          4324,
+          "Ijk_Boring"
+        ],
+        [
+          4288,
+          "Ijk_Boring"
+        ],
+        [
+          4338,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4324": {
+      "addr": 4324,
+      "size": 12,
+      "name": null,
+      "function_address": 4281,
+      "instructions": [
+        "0x10e4:\tmov\trax, qword ptr [rip + 0x2f05]",
+        "0x10eb:\ttest\trax, rax",
+        "0x10ee:\tje\t0x10f8"
+      ],
+      "successors": [
+        [
+          4344,
+          "Ijk_Boring"
+        ],
+        [
+          4336,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4288,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4336": {
+      "addr": 4336,
+      "size": 2,
+      "name": null,
+      "function_address": 4281,
+      "instructions": [
+        "0x10f0:\tjmp\trax"
+      ],
+      "successors": [
+        [
+          2101328,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4324,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4365": {
+      "addr": 4365,
+      "size": 14,
+      "name": null,
+      "function_address": 4352,
+      "instructions": [
+        "0x110d:\tpush\trbp",
+        "0x110e:\tcmp\tqword ptr [rip + 0x2ee2], 0",
+        "0x1116:\tmov\trbp, rsp",
+        "0x1119:\tje\t0x1127"
+      ],
+      "successors": [
+        [
+          4391,
+          "Ijk_Boring"
+        ],
+        [
+          4379,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4352,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4408": {
+      "addr": 4408,
+      "size": 1,
+      "name": null,
+      "function_address": 4352,
+      "instructions": [
+        "0x1138:\tret\t"
+      ],
+      "successors": [],
+      "predecessors": [
+        [
+          4405,
+          "Ijk_Boring"
+        ],
+        [
+          4352,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4391": {
+      "addr": 4391,
+      "size": 5,
+      "name": null,
+      "function_address": 4352,
+      "instructions": [
+        "0x1127:\tcall\t0x1090"
+      ],
+      "successors": [
+        [
+          4240,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          4365,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4379": {
+      "addr": 4379,
+      "size": 12,
+      "name": null,
+      "function_address": 4352,
+      "instructions": [
+        "0x111b:\tmov\trdi, qword ptr [rip + 0x2f0e]",
+        "0x1122:\tcall\t0x1050"
+      ],
+      "successors": [
+        [
+          4176,
+          "Ijk_Call"
+        ]
+      ],
+      "predecessors": [
+        [
+          4365,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4240": {
+      "addr": 4240,
+      "size": 19,
+      "name": null,
+      "function_address": 4240,
+      "instructions": [
+        "0x1090:\tlea\trdi, [rip + 0x2fa1]",
+        "0x1097:\tlea\trax, [rip + 0x2f9a]",
+        "0x109e:\tcmp\trax, rdi",
+        "0x10a1:\tje\t0x10b8"
+      ],
+      "successors": [
+        [
+          4280,
+          "Ijk_Boring"
+        ],
+        [
+          4259,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4391,
+          "Ijk_Call"
+        ],
+        [
+          4230,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4396": {
+      "addr": 4396,
+      "size": 9,
+      "name": null,
+      "function_address": 4352,
+      "instructions": [
+        "0x112c:\tmov\tbyte ptr [rip + 0x2f05], 1",
+        "0x1133:\tpop\trbp",
+        "0x1134:\tret\t"
+      ],
+      "successors": [],
+      "predecessors": [
+        [
+          4280,
+          "Ijk_Ret"
+        ]
+      ]
+    },
+    "4288": {
+      "addr": 4288,
+      "size": 36,
+      "name": null,
+      "function_address": 4281,
+      "instructions": [
+        "0x10c0:\tlea\trdi, [rip + 0x2f71]",
+        "0x10c7:\tlea\trsi, [rip + 0x2f6a]",
+        "0x10ce:\tsub\trsi, rdi",
+        "0x10d1:\tmov\trax, rsi",
+        "0x10d4:\tshr\trsi, 0x3f",
+        "0x10d8:\tsar\trax, 3",
+        "0x10dc:\tadd\trsi, rax",
+        "0x10df:\tsar\trsi, 1",
+        "0x10e2:\tje\t0x10f8"
+      ],
+      "successors": [
+        [
+          4344,
+          "Ijk_Boring"
+        ],
+        [
+          4324,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4281,
+          "Ijk_Boring"
+        ],
+        [
+          4416,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4425": {
+      "addr": 4425,
+      "size": 7,
+      "name": null,
+      "function_address": 4425,
+      "instructions": [
+        "0x1149:\tnop\tdword ptr [rax]"
+      ],
+      "successors": [
+        [
+          4432,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    },
+    "4631": {
+      "addr": 4631,
+      "size": 9,
+      "name": null,
+      "function_address": 4631,
+      "instructions": [
+        "0x1217:\tnop\tword ptr [rax + rax]"
+      ],
+      "successors": [
+        [
+          4640,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    },
+    "4789": {
+      "addr": 4789,
+      "size": 11,
+      "name": null,
+      "function_address": 4789,
+      "instructions": [
+        "0x12b5:\tnop\tword ptr cs:[rax + rax]"
+      ],
+      "successors": [
+        [
+          4800,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    },
+    "4493": {
+      "addr": 4493,
+      "size": 7,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x118d:\tmov\tdword ptr [rbp - 0xc], 0"
+      ],
+      "successors": [
+        [
+          4500,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          1048584,
+          "Ijk_Ret"
+        ]
+      ]
+    },
+    "4775": {
+      "addr": 4775,
+      "size": 8,
+      "name": null,
+      "function_address": 4640,
+      "instructions": [
+        "0x12a7:\tmov\trax, qword ptr [rbp - 0x20]",
+        "0x12ab:\tmov\tqword ptr [rbp - 8], rax"
+      ],
+      "successors": [
+        [
+          4783,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4721,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4714": {
+      "addr": 4714,
+      "size": 7,
+      "name": null,
+      "function_address": 4640,
+      "instructions": [
+        "0x126a:\tmov\tdword ptr [rbp - 0x2c], 2"
+      ],
+      "successors": [
+        [
+          4721,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4709,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4565": {
+      "addr": 4565,
+      "size": 7,
+      "name": null,
+      "function_address": 4432,
+      "instructions": [
+        "0x11d5:\tmov\tdword ptr [rbp - 0x10], 0"
+      ],
+      "successors": [
+        [
+          4572,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          1048584,
+          "Ijk_Ret"
+        ]
+      ]
+    },
+    "4860": {
+      "addr": 4860,
+      "size": 14,
+      "name": null,
+      "function_address": 4800,
+      "instructions": [
+        "0x12fc:\tmov\trcx, rax",
+        "0x12ff:\tmov\trax, qword ptr [rbp - 0x18]",
+        "0x1303:\tadd\trax, rcx",
+        "0x1306:\tmov\tqword ptr [rbp - 8], rax"
+      ],
+      "successors": [
+        [
+          4874,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4874,
+          "Ijk_Ret"
+        ]
+      ]
+    },
+    "4230": {
+      "addr": 4230,
+      "size": 10,
+      "name": null,
+      "function_address": 4230,
+      "instructions": [
+        "0x1086:\tnop\tword ptr cs:[rax + rax]"
+      ],
+      "successors": [
+        [
+          4240,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    },
+    "4273": {
+      "addr": 4273,
+      "size": 7,
+      "name": null,
+      "function_address": 4230,
+      "instructions": [
+        "0x10b1:\tnop\tdword ptr [rax]"
+      ],
+      "successors": [
+        [
+          4280,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    },
+    "4281": {
+      "addr": 4281,
+      "size": 7,
+      "name": null,
+      "function_address": 4281,
+      "instructions": [
+        "0x10b9:\tnop\tdword ptr [rax]"
+      ],
+      "successors": [
+        [
+          4288,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    },
+    "4338": {
+      "addr": 4338,
+      "size": 6,
+      "name": null,
+      "function_address": 4281,
+      "instructions": [
+        "0x10f2:\tnop\tword ptr [rax + rax]"
+      ],
+      "successors": [
+        [
+          4344,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    },
+    "4405": {
+      "addr": 4405,
+      "size": 3,
+      "name": null,
+      "function_address": 4405,
+      "instructions": [
+        "0x1135:\tnop\tdword ptr [rax]"
+      ],
+      "successors": [
+        [
+          4408,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    },
+    "4352": {
+      "addr": 4352,
+      "size": 13,
+      "name": null,
+      "function_address": 4352,
+      "instructions": [
+        "0x1100:\tendbr64\t",
+        "0x1104:\tcmp\tbyte ptr [rip + 0x2f2d], 0",
+        "0x110b:\tjne\t0x1138"
+      ],
+      "successors": [
+        [
+          4365,
+          "Ijk_Boring"
+        ],
+        [
+          4408,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4345,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4416": {
+      "addr": 4416,
+      "size": 9,
+      "name": null,
+      "function_address": 4416,
+      "instructions": [
+        "0x1140:\tendbr64\t",
+        "0x1144:\tjmp\t0x10c0"
+      ],
+      "successors": [
+        [
+          4288,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": [
+        [
+          4409,
+          "Ijk_Boring"
+        ]
+      ]
+    },
+    "4345": {
+      "addr": 4345,
+      "size": 7,
+      "name": null,
+      "function_address": 4345,
+      "instructions": [
+        "0x10f9:\tnop\tdword ptr [rax]"
+      ],
+      "successors": [
+        [
+          4352,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    },
+    "4409": {
+      "addr": 4409,
+      "size": 7,
+      "name": null,
+      "function_address": 4409,
+      "instructions": [
+        "0x1139:\tnop\tdword ptr [rax]"
+      ],
+      "successors": [
+        [
+          4416,
+          "Ijk_Boring"
+        ]
+      ],
+      "predecessors": []
+    }
+  },
+  "call_graph_edges": [
+    [
+      4230,
+      4240,
+      "transition"
+    ],
+    [
+      4281,
+      2101328,
+      "transition"
+    ],
+    [
+      4096,
+      2101336,
+      "call"
+    ],
+    [
+      4140,
+      4144,
+      "transition"
+    ],
+    [
+      4144,
+      1048584,
+      "transition"
+    ],
+    [
+      4160,
+      1048592,
+      "transition"
+    ],
+    [
+      4192,
+      1048576,
+      "call"
+    ],
+    [
+      1048576,
+      4432,
+      "call"
+    ],
+    [
+      4240,
+      2101328,
+      "transition"
+    ],
+    [
+      4345,
+      4352,
+      "transition"
+    ],
+    [
+      4352,
+      4240,
+      "call"
+    ],
+    [
+      4352,
+      4176,
+      "call"
+    ],
+    [
+      4405,
+      4352,
+      "transition"
+    ],
+    [
+      4409,
+      4416,
+      "transition"
+    ],
+    [
+      4416,
+      4281,
+      "transition"
+    ],
+    [
+      4425,
+      4432,
+      "transition"
+    ],
+    [
+      4432,
+      4144,
+      "call"
+    ],
+    [
+      4432,
+      4160,
+      "call"
+    ],
+    [
+      4432,
+      4640,
+      "call"
+    ],
+    [
+      4432,
+      4800,
+      "call"
+    ],
+    [
+      4800,
+      4800,
+      "call"
+    ],
+    [
+      4631,
+      4640,
+      "transition"
+    ],
+    [
+      4789,
+      4800,
+      "transition"
+    ]
+  ]
+}

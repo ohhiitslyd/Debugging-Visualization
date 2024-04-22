@@ -1,47 +1,60 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEngine;
 
-public class ParseGraphJson : MonoBehaviour
+[Serializable]
+public class Connection
 {
-    void Start()
+    public int target;
+    public string type;
+}
+
+[Serializable]
+public class Node
+{
+    public int addr;
+    public int size;
+    public string name;
+    public int function_address;
+    public List<string> instructions;
+    public List<Connection> successors;
+    public List<Connection> predecessors;
+}
+
+[Serializable]
+public class CallGraphEdge
+{
+    public int source;
+    public int target;
+    public string type;
+}
+
+
+public class ParsedJsonData
+{
+    public Dictionary<string, Node> all_nodes;
+    public List<CallGraphEdge> call_graph_edges;
+
+    public static ParsedJsonData JSONToParsedData(string path)
     {
-        LoadJsonData();
+        TextAsset file = Resources.Load<TextAsset>(path);
+        if (file == null)
+        {
+            return null;
+        }
+        string modifiedJson = PreprocessJson(file.text);
+        ParsedJsonData parsedJsonData = JsonConvert.DeserializeObject<ParsedJsonData>(modifiedJson);
+        if (parsedJsonData == null)
+        {
+            return null;
+        }
+        return parsedJsonData;
     }
 
-    private void LoadJsonData()
-    {
-        TextAsset file = Resources.Load<TextAsset>("jsondata");
-        if (file != null)
-        {
-            string modifiedJson = PreprocessJson(file.text);
-            Debug.Log(modifiedJson);
-            GraphObject data = JsonConvert.DeserializeObject<GraphObject>(modifiedJson);
-            if (data != null)
-            {
-                Debug.Log("JSON Data Loaded Successfully!");
-                //Debug.Log(data);
-                //Debug.Log(data.all_nodes);
-                //Debug.Log(data.all_nodes["4096"].name);
-                //Debug.Log(data.all_nodes["4096"].instructions[0]);
-                //Debug.Log(data.all_nodes["4096"].successors[0].target);
-                //Debug.Log(data.call_graph_edges);
-                //Debug.Log(data.call_graph_edges.Count);
-                //Debug.Log(data.call_graph_edges[0].type);
-            }
-            else
-            {
-                Debug.Log("Failed to load JSON Data.");
-            }
-        }
-        else
-        {
-            Debug.LogError("Failed to load JSON file.");
-        }
-    }
 
-    private string PreprocessJson(string originalJson)
+    private static string PreprocessJson(string originalJson)
     {
         JObject json = JObject.Parse(originalJson);
 
@@ -73,7 +86,7 @@ public class ParseGraphJson : MonoBehaviour
         return json.ToString();
     }
 
-    private JArray ConvertConnections(JArray connections)
+    private static JArray ConvertConnections(JArray connections)
     {
         JArray newConnections = new JArray();
         foreach (JArray connection in connections)
@@ -87,4 +100,5 @@ public class ParseGraphJson : MonoBehaviour
         }
         return newConnections;
     }
+
 }
