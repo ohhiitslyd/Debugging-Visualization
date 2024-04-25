@@ -288,6 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneBlockPrefab: {fileID: 5622668386101063863, guid: 8172571faf0c448ef9a3e384b6e9eb43,
     type: 3}
+  filename: angr_jsons/simple_debug__angr
 --- !u!4 &147545012
 Transform:
   m_ObjectHideFlags: 0
@@ -820,11 +821,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SceneBlock
-      objectReference: {fileID: 0}
-    - target: {fileID: 5622668386101063863, guid: 8172571faf0c448ef9a3e384b6e9eb43,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7919353816477937308, guid: 8172571faf0c448ef9a3e384b6e9eb43,
         type: 3}

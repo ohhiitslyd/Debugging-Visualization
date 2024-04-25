@@ -6,15 +6,15 @@ using UnityEngine.UIElements;
 public class SceneBlock
 {
 
-public GameObject sceneBlockPrefab;
-public TextMeshProUGUI codeBlockText;
-public TextMeshProUGUI codeBlockName;
+    public GameObject sceneBlockPrefab;
+    public TextMeshProUGUI codeBlockText;
+    public TextMeshProUGUI codeBlockName;
 
- private float positionX;
- private float positionY;
- private float positionZ;
- private float size;
-//  private GraphNode node;
+     private float positionX;
+     private float positionY;
+     private float positionZ;
+     private float size;
+    //  private GraphNode node;
 
     /* Constructor for a single SceneBlock class. 
     Should be instantiated in BlockManager.cs */
