@@ -6,6 +6,7 @@ public class GraphNode
 {
     public int address;
     public string name;
+    public int size;
     public int function_address;
     public List<string> instructions;
 }
@@ -40,6 +41,7 @@ public class GraphStructure
                 {
                     address = jsonNode.addr,
                     name = jsonNode.name,
+                    size = jsonNode.size,
                     function_address = jsonNode.function_address,
                     instructions = jsonNode.instructions
                 };

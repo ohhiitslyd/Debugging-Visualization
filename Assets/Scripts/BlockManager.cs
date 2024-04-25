@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BlockManager : MonoBehaviour
@@ -12,6 +13,11 @@ public class BlockManager : MonoBehaviour
 
     public string filename = "angr_jsons/simple_debug__angr";
     private GraphStructure graphStructure;
+
+    private Dictionary<int, GameObject> nodeObjects = new Dictionary<int, GameObject>();
+    private float repulsiveForce = 100.0f;
+    private float springLength = 5.0f;
+    private float springConstant = 0.1f;
 
 
     // Start: Initializing lists and adding two test blocks
@@ -71,14 +77,75 @@ public class BlockManager : MonoBehaviour
 
             Vector3 position = new Vector3(col * spacing, 0, row * -spacing);
 
-            GameObject obj = Instantiate(sceneBlockPrefab, position, Quaternion.identity);
+            //GameObject obj = Instantiate(sceneBlockPrefab, position, Quaternion.identity);
+            GameObject obj = Instantiate(sceneBlockPrefab, Random.insideUnitSphere * 10, Quaternion.identity);
             sceneBlockObjs.Add(obj);
+            nodeObjects[node.address] = obj;
 
             obj.GetComponent<SceneBlockObj>().SetGraphNode(node);
             obj.SetActive(true);
 
             index++;
         }
+
+        // begin layout
+        // TODO: - floragan. check here!!
+        StartCoroutine(LayoutCoroutine());
+    }
+
+
+    IEnumerator LayoutCoroutine()
+    {
+        bool stable = false;
+        while (!stable)
+        {
+            stable = ApplyForces();
+            yield return null;  // Wait for the next frame
+        }
+    }
+
+
+    bool ApplyForces()
+    {
+        Dictionary<int, Vector3> forces = new Dictionary<int, Vector3>();
+        foreach (var nodeA in graphStructure.nodes.Values)
+        {
+            forces[nodeA.address] = Vector3.zero;
+            foreach (var nodeB in graphStructure.nodes.Values)
+            {
+                if (nodeA.address != nodeB.address)
+                {
+                    Vector3 direction = nodeObjects[nodeA.address].transform.position - nodeObjects[nodeB.address].transform.position;
+                    float distance = direction.magnitude;
+                    float repulsive = repulsiveForce / (distance * distance);
+                    forces[nodeA.address] += direction.normalized * repulsive;
+                }
+            }
+        }
+
+        foreach (var connectionList in graphStructure.successors)
+        {
+            foreach (var connection in connectionList.Value)
+            {
+                var nodeA = graphStructure.nodes[connectionList.Key];
+                var nodeB = graphStructure.nodes[connection.target];
+                Vector3 direction = nodeObjects[nodeB.address].transform.position - nodeObjects[nodeA.address].transform.position;
+                float displacement = springLength - direction.magnitude;
+                Vector3 springForce = direction.normalized * (displacement * springConstant);
+                forces[nodeA.address] -= springForce;
+                forces[nodeB.address] += springForce;
+            }
+        }
+
+        float maxDisplacement = 0.0f;
+        foreach (var node in graphStructure.nodes.Values)
+        {
+            Vector3 displacement = forces[node.address] * Time.deltaTime;
+            nodeObjects[node.address].transform.position += displacement;
+            maxDisplacement = Mathf.Max(maxDisplacement, displacement.magnitude);
+        }
+
+        return maxDisplacement < 0.02f;  // Consider it stable if max displacement is small
     }
 
     // public void ChangeUIText()
