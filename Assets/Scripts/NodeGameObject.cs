@@ -13,26 +13,36 @@ public class NodeGameObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        node = new GraphNode();
+        // node = new GraphNode();
 
-        node.address = address;
-        node.name = nodeName;
-        node.function_address = function_address;
-        node.instructions = instructions;
+        // node.address = address;
+        // node.name = nodeName;
+        // node.function_address = function_address;
+        // node.instructions = instructions;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void OnMouseDown() {
+    public void SetNode(GraphNode graphNode)
+    {
+        node = graphNode;
+        address = node.address;
+        nodeName = node.name;
+        function_address = node.function_address;
+        instructions = node.instructions;
+    }
+
+    void OnMouseDown()
+    {
         Panel.Instance.panel.SetActive(true);
-        Debug.Log(node);
-        Panel.Instance.title.text = nodeName;
-        Panel.Instance.address.text = address.ToString();
-        Panel.Instance.description.text = string.Join("\n", instructions.ToArray());
+        Debug.Log(node.name);
+        Panel.Instance.title.text = node.name;
+        Panel.Instance.address.text = node.address.ToString();
+        Panel.Instance.description.text = string.Join("\n", node.instructions.ToArray());
 
     }
 }

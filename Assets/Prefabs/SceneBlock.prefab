@@ -322,6 +322,7 @@ GameObject:
   - component: {fileID: 6233660825567696124}
   - component: {fileID: 4661918933165036567}
   - component: {fileID: 8430611033917448046}
+  - component: {fileID: 7368857319225621062}
   m_Layer: 0
   m_Name: SceneBlock
   m_TagString: Untagged
@@ -428,6 +429,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2434fcbef8654b07887988fe37e86d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7368857319225621062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622668386101063863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18483373ecd834d398ff8ee6807bfec2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  address: 0
+  nodeName: 
+  function_address: 0
+  instructions: []
 --- !u!1 &7044126458362701804
 GameObject:
   m_ObjectHideFlags: 0
