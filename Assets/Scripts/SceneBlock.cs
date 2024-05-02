@@ -9,16 +9,17 @@ public class SceneBlock
     public GameObject sceneBlockPrefab;
     public TextMeshProUGUI codeBlockText;
     public TextMeshProUGUI codeBlockName;
+    public GraphNode node;
 
-     private float positionX;
-     private float positionY;
-     private float positionZ;
-     private float size;
+    private float positionX;
+    private float positionY;
+    private float positionZ;
+    private float size;
     //  private GraphNode node;
 
     /* Constructor for a single SceneBlock class. 
     Should be instantiated in BlockManager.cs */
-    public SceneBlock(float x, float y, float z, float size, GameObject prefab) 
+    public SceneBlock(float x, float y, float z, float size, GameObject prefab)
     {
         this.positionX = x;
         this.positionY = y;
@@ -27,10 +28,10 @@ public class SceneBlock
         this.sceneBlockPrefab = prefab;
     }
 
-    public void SetCanvasReference(Transform obj) 
+    public void SetCanvasReference(Transform obj)
     {
-       codeBlockName = obj.Find("Name").GetComponent<TextMeshProUGUI>();
-       codeBlockName = obj.Find("TextInCodeBlock").GetComponent<TextMeshProUGUI>();
+        codeBlockName = obj.Find("Name").GetComponent<TextMeshProUGUI>();
+        codeBlockName = obj.Find("TextInCodeBlock").GetComponent<TextMeshProUGUI>();
     }
 
     public void SetBlockPrefab(GameObject prefab)
@@ -55,15 +56,18 @@ public class SceneBlock
         return size;
     }
 
-    public float GetPositionX() {
+    public float GetPositionX()
+    {
         return positionX;
     }
 
-    public float GetPositionY() {
+    public float GetPositionY()
+    {
         return positionY;
     }
 
-    public float GetPositionZ() {
+    public float GetPositionZ()
+    {
         return positionZ;
     }
 }
