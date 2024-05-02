@@ -77,8 +77,8 @@ public class BlockManager : MonoBehaviour
 
             Vector3 position = new Vector3(col * spacing, 0, row * -spacing);
 
-            //GameObject obj = Instantiate(sceneBlockPrefab, position, Quaternion.identity);
-            GameObject obj = Instantiate(sceneBlockPrefab, Random.insideUnitSphere * 10, Quaternion.identity);
+            GameObject obj = Instantiate(sceneBlockPrefab, position, Quaternion.identity);
+            //GameObject obj = Instantiate(sceneBlockPrefab, Random.insideUnitSphere * 10, Quaternion.identity);
             sceneBlockObjs.Add(obj);
             nodeObjects[node.address] = obj;
 
@@ -90,7 +90,7 @@ public class BlockManager : MonoBehaviour
 
         // begin layout
         // TODO: - floragan. check here!!
-        StartCoroutine(LayoutCoroutine());
+        //StartCoroutine(LayoutCoroutine());
     }
 
 
