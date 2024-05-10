@@ -27,24 +27,13 @@ public class SceneBlockObj : MonoBehaviour
 
         if (node != null)
         {
+
             nameText.text = node.name;
             instructionText.text = String.Join("\n", node.instructions);
         }
-    }
-
-    public Vector3 GetFrontCenter()
-    {
-        //Debug.Log("====== jiaqi front ======");
-        //Debug.Log(transform.position);
-        //Debug.Log(transform.position + transform.forward * (transform.localScale.z / 2));
-        return transform.position + transform.forward * (transform.localScale.z / 2);
-    }
-
-    public Vector3 GetBackCenter()
-    {
-        //Debug.Log("====== jiaqi back======");
-        //Debug.Log(transform.position);
-        //Debug.Log(transform.position - transform.forward * (transform.localScale.z / 2));
-        return transform.position - transform.forward * (transform.localScale.z / 2);
+        else
+        {
+            Debug.Log("Node is null");
+        }
     }
 }

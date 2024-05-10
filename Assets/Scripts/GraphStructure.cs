@@ -4,11 +4,15 @@ using UnityEngine;
 using System.Linq;
 public class GraphNode
 {
+    
+    public GraphStructure graphStructure;
     public int address;
     public string name;
     public int size;
     public int function_address;
     public List<string> instructions;
+    public List<Connection> successors;
+    public List<Connection> predecessors;
 }
 
 public class GraphStructure
@@ -43,7 +47,9 @@ public class GraphStructure
                     name = jsonNode.name,
                     size = jsonNode.size,
                     function_address = jsonNode.function_address,
-                    instructions = jsonNode.instructions
+                    instructions = jsonNode.instructions,
+                    successors = jsonNode.successors,
+                    predecessors = jsonNode.predecessors
                 };
                 return graphNode;
             }

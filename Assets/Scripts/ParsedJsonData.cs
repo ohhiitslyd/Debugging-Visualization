@@ -9,6 +9,11 @@ public class Connection
 {
     public int target;
     public string type;
+
+    public override string ToString()
+    {
+        return $"{type} Address: {target}";
+    }
 }
 
 [Serializable]
@@ -66,6 +71,7 @@ public class ParsedJsonData
             JArray predecessors = (JArray)node.Value["predecessors"];
             node.Value["successors"] = ConvertConnections(successors);
             node.Value["predecessors"] = ConvertConnections(predecessors);
+            
         }
 
         // convert call_graph_edges
