@@ -19,16 +19,21 @@ public class SceneBlockObj : MonoBehaviour
 
     private void UpdateTexts()
     {
-        if(nameText == null || instructionText == null)
+        if (nameText == null || instructionText == null)
         {
             nameText = transform.Find("VerticalAdjust/Canvas/Name").GetComponent<TMP_Text>();
             instructionText = transform.Find("VerticalAdjust/Canvas/TextInCodeBlock").GetComponent<TMP_Text>();
         }
-        
+
         if (node != null)
         {
+
             nameText.text = node.name;
             instructionText.text = String.Join("\n", node.instructions);
+        }
+        else
+        {
+            Debug.Log("Node is null");
         }
     }
 }

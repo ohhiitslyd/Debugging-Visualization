@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Arrow;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Edge
@@ -16,17 +18,26 @@ public class BlockManager : MonoBehaviour
     public Dictionary<int, GameObject> sceneBlockDict;
     // private GraphSctructure graph;
     public GameObject sceneBlockPrefab;
+    public GameObject edgePrefab;
 
 
     public string filename = "angr_jsons/simple_debug__angr";
     private GraphStructure graphStructure;
 
+
+    //private Dictionary<int, GameObject> nodeObjects = new Dictionary<int, GameObject>();
+    //private float repulsiveForce = 100.0f;
+    //private float springLength = 5.0f;
+    //private float springConstant = 0.1f;
+
     public List<GameObject> testNodes;
     public List<Edge> testEdges;
 
     private bool updatingNodes;
+    private bool updatedNodes = false;
+    private bool addedEdges = false;
 
-    [SerializeField] private float movingThreshold = 0.01f;
+    [SerializeField] private float movingThreshold = 0.03f;
 
     void UpdateGraphLayout(List<GameObject> nodes, List<Edge> edges, float repulsiveForceConstant, float springForceConstant, float damping)
     {
@@ -66,7 +77,11 @@ public class BlockManager : MonoBehaviour
             node.transform.position += velocity * damping;
             if (velocity.magnitude > movingThreshold) isMoving = true;
         }
-        if (!isMoving) updatingNodes = false;
+        if (!isMoving)
+        {
+            updatingNodes = false;
+            updatedNodes = true;
+        }
     }
 
     public void CreateFunctionBlocks()
@@ -181,7 +196,6 @@ public class BlockManager : MonoBehaviour
         }
     }
 
-    // TODO: - floragan. temp logic
     private void CreateGraphBlocks()
     {
         int index = 0;
@@ -209,10 +223,66 @@ public class BlockManager : MonoBehaviour
         }
     }
 
+    //private void CreateGraphEdges()
+    //{
+    //    foreach(Edge edge in testEdges)
+    //    {
+    //        Vector3 fromPoint = edge.from.GetComponent<SceneBlockObj>().GetBackCenter();
+    //        Vector3 toPoint = edge.to.GetComponent<SceneBlockObj>().GetFrontCenter();
+    //        GameObject edgeObj = Instantiate(edgePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+    //        Arrow.ArrowRenderer animatedArrowRenderer = edgeObj.GetComponent<Arrow.ArrowRenderer>();
+    //        animatedArrowRenderer.SetPositions(fromPoint, toPoint);
+    //    }
+    //    addedEdges = true;
+    //}
+
+    private void CreateGraphEdges()
+    {
+        foreach (Edge edge in testEdges)
+        {
+            Vector3 fromCenter = edge.from.transform.position;
+            Vector3 toCenter = edge.to.transform.position;
+
+            // 获取交点
+            Vector3 fromEdgePoint = FindClosestIntersectionPoint(fromCenter, toCenter, edge.from.transform.localScale * 0.5f);
+            Vector3 toEdgePoint = FindClosestIntersectionPoint(toCenter, fromCenter, edge.to.transform.localScale * 0.5f);
+
+            GameObject edgeObj = Instantiate(edgePrefab, Vector3.zero, Quaternion.identity);
+            Arrow.ArrowRenderer animatedArrowRenderer = edgeObj.GetComponent<Arrow.ArrowRenderer>();
+            animatedArrowRenderer.SetPositions(fromEdgePoint, toEdgePoint);
+        }
+        addedEdges = true;
+    }
+
+    private Vector3 FindClosestIntersectionPoint(Vector3 center, Vector3 target, Vector3 halfExtents)
+    {
+        Vector3 direction = (target - center).normalized;
+        float distance = Vector3.Distance(center, target);
+
+        // 使用射线投射找到交点
+        if (Physics.Raycast(center, direction, out RaycastHit hit, distance))
+        {
+            return hit.point;
+        }
+        else
+        {
+            // 如果没有交点，默认返回目标中心（这种情况不应该发生，因为目标是盒子）
+            return target;
+        }
+    }
+
+
     void Update()
     {
         // test force thing
-        if (updatingNodes && testNodes.Count > 0 && testEdges.Count > 0) UpdateGraphLayout(testNodes, testEdges, 40f, 1f, 1f);
+        if (updatingNodes && testNodes.Count > 0 && testEdges.Count > 0)
+        {
+            UpdateGraphLayout(testNodes, testEdges, 40f, 1f, 1f);
+        } else if(updatedNodes && !addedEdges)
+        {
+            CreateGraphEdges();
+        }
+
     }
 
     // public void ChangeUIText()
@@ -224,4 +294,5 @@ public class BlockManager : MonoBehaviour
     //         sceneBlocks[i].codeBlockText.text = "This is a new body paragraph";
     //     }
     // }
+
 }
