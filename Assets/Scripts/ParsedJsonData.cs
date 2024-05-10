@@ -71,6 +71,7 @@ public class ParsedJsonData
             JArray predecessors = (JArray)node.Value["predecessors"];
             node.Value["successors"] = ConvertConnections(successors);
             node.Value["predecessors"] = ConvertConnections(predecessors);
+            
         }
 
         // convert call_graph_edges
