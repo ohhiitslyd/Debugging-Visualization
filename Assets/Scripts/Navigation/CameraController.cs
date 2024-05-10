@@ -1,104 +1,106 @@
 using UnityEngine;
-public class CameraController : MonoBehaviour {
-    [SerializeField] float navigationSpeed = 2.4f;
-    [SerializeField] float shiftMultiplier = 2f;
-    [SerializeField] float sensitivity = 1.0f;
-    [SerializeField] float panSensitivity = 0.5f;
-    [SerializeField] float mouseWheelZoomSpeed = 1.0f;
+
+public class CameraController : MonoBehaviour
+{
+    [SerializeField] float navigationSpeed = 2.7f;
+    [SerializeField] float shiftMultiplier = 2f; // Speed multiplier when Shift is pressed
+    [SerializeField] float zoomSpeed = 10f;
+    [SerializeField] float minOrthographicSize = 5.5f;
+    [SerializeField] float maxOrthographicSize = 50f;
+    [SerializeField] float zoomLerpSpeed = 10f; // Speed at which zoom lerps
+    [SerializeField] float keyboardPanSpeed = 5f; // Speed for WASD navigation
+
+    [SerializeField] bool activeKeyboardMovement = false;
+
     private Camera cam;
-    private Vector3 anchorPoint;
-    private Quaternion anchorRot;
+    private Vector3 dragOrigin;
+    private bool isDragging;
+    private float targetOrthographicSize;
 
-    private bool isPanning;
-    private void Awake () {
+    private void Awake()
+    {
         cam = GetComponent<Camera>();
-    }
-    void Update () {
 
+        // Ensure the camera is orthographic and set it to an isometric angle
+        cam.orthographic = true;
+        transform.rotation = Quaternion.Euler(30f, -45f, 0f); // Adjust as needed
 
-        MousePanning();
-        if(isPanning)
-        {return;}
-
-        // if(Input.GetMouseButton(1)) {
-            Vector3 move = Vector3.zero;
-            float speed = navigationSpeed * (Input.GetKey(KeyCode.LeftShift) ? shiftMultiplier : 1f) * Time.deltaTime * 9.1f;
-            if(Input.GetKey(KeyCode.W))
-                move += Vector3.forward * speed;
-            if(Input.GetKey(KeyCode.S))
-                move -= Vector3.forward * speed;
-            if(Input.GetKey(KeyCode.D))
-                move += Vector3.right * speed;
-            if(Input.GetKey(KeyCode.A))
-                move -= Vector3.right * speed;
-            if(Input.GetKey(KeyCode.E))
-                move += Vector3.up * speed;
-            if(Input.GetKey(KeyCode.Q))
-                move -= Vector3.up * speed;
-            transform.Translate(move);
-        // }
-        if(Input.GetMouseButtonDown(0)) {
-            anchorPoint = new Vector3(Input.mousePosition.y, -Input.mousePosition.x);
-            anchorRot = transform.rotation;
-        }
-
-        if(Input.GetMouseButton(0)) {
-            Quaternion rot = anchorRot;
-            Vector3 dif = anchorPoint - new Vector3(Input.mousePosition.y, -Input.mousePosition.x);
-            rot.eulerAngles += dif * sensitivity;
-            transform.rotation = rot;
-        }
-
-        MouseWheeling();
-
+        targetOrthographicSize = cam.orthographicSize;
     }
 
-    //Zoom with mouse wheel
-    void MouseWheeling()
+    private void Update()
     {
-        float speed = 10*(mouseWheelZoomSpeed * (Input.GetKey(KeyCode.LeftShift) ? shiftMultiplier : 1f) * Time.deltaTime * 9.1f);
+        HandleDragMovement();
+        HandleTrackedZoom();
 
-        Vector3 pos = transform.position;
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
-            pos = pos - (transform.forward*speed);
-            transform.position = pos;
+        if(activeKeyboardMovement){
+            HandleKeyboardMovement();
         }
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
-        {
-            pos = pos + (transform.forward*speed);
-            transform.position = pos;
-        }
+
+        // Smoothly interpolate towards the target orthographic size
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetOrthographicSize, Time.deltaTime * zoomLerpSpeed);
     }
 
-
-    private float pan_x;
-    private float pan_y;
-    private Vector3 panComplete;
-
-    void MousePanning()
+    private void HandleDragMovement()
     {
-
-        pan_x=-Input.GetAxis("Mouse X")*panSensitivity;
-        pan_y=-Input.GetAxis("Mouse Y")*panSensitivity;
-        panComplete = new Vector3(pan_x,pan_y,0);
-
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
-            isPanning=true;
+            dragOrigin = cam.ScreenToWorldPoint(Input.mousePosition);
+            isDragging = true;
         }
 
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(0))
         {
-            isPanning=false;
+            isDragging = false;
         }
 
-        if(isPanning)
+        if (isDragging)
         {
-            transform.Translate(panComplete);
+            Vector3 difference = dragOrigin - cam.ScreenToWorldPoint(Input.mousePosition);
+            transform.position += difference;
         }
-
-
     }
 
+    private void HandleKeyboardMovement()
+    {
+        float speed = keyboardPanSpeed * (Input.GetKey(KeyCode.LeftShift) ? shiftMultiplier : 1f) * Time.deltaTime;
+
+        Vector3 movement = new Vector3();
+        if (Input.GetKey(KeyCode.W))
+        {
+            movement += new Vector3(1, 1, 0).normalized * speed; // Forward (top-right in isometric view)
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            movement += new Vector3(-1, -1, 0).normalized * speed; // Backward (bottom-left in isometric view)
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            movement += new Vector3(-1, 1, 0).normalized * speed; // Left (top-left in isometric view)
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            movement += new Vector3(1, -1, 0).normalized * speed; // Right (bottom-right in isometric view)
+        }
+
+        transform.position += movement;
+    }
+
+    private void HandleTrackedZoom()
+    {
+        float scrollData = Input.GetAxis("Mouse ScrollWheel");
+
+        if (scrollData != 0.0f)
+        {
+            Vector3 mousePos = Input.mousePosition;
+            Vector3 worldPosBeforeZoom = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, cam.nearClipPlane));
+
+            targetOrthographicSize = Mathf.Clamp(targetOrthographicSize - scrollData * zoomSpeed, minOrthographicSize, maxOrthographicSize);
+
+            Vector3 worldPosAfterZoom = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, cam.nearClipPlane));
+            Vector3 offset = worldPosBeforeZoom - worldPosAfterZoom;
+
+            transform.position += offset;
+        }
+    }
 }
