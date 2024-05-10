@@ -288,7 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneBlockPrefab: {fileID: 5622668386101063863, guid: 8172571faf0c448ef9a3e384b6e9eb43,
     type: 3}
-  edgePrefab: {fileID: 3027817249783206656, guid: fd9e4ec480f89ff438340d1ac7c4fdfe,
+  edgePrefab: {fileID: 3027817249783206656, guid: 8ca77aa4e27de4b17ba648db63c4c1c0,
     type: 3}
   filename: angr_jsons/simple_debug__angr
   testNodes: []
