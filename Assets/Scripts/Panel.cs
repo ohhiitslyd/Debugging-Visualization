@@ -36,9 +36,9 @@ public class Panel : MonoBehaviour
     {
         title = transform.Find("Canvas/Panel/title").GetComponent<TMP_InputField>();
         address = transform.Find("Canvas/Panel/address").GetComponent<TMP_InputField>();
-        description = transform.Find("Canvas/Panel/basic block/basic block text body").GetComponent<TMP_InputField>();
-        successorsText = transform.Find("Canvas/Panel/successors/successors text").GetComponent<TMP_InputField>();
-        predecessorsText = transform.Find("Canvas/Panel/predecessors/predecessors text").GetComponent<TMP_InputField>();
+        description = transform.Find("Canvas/Panel/Scroll View/Viewport/Content/basic block/basic block text body").GetComponent<TMP_InputField>();
+        successorsText = transform.Find("Canvas/Panel/Scroll View/Viewport/Content/successors/successors text").GetComponent<TMP_InputField>();
+        predecessorsText = transform.Find("Canvas/Panel/Scroll View/Viewport/Content/predecessors/predecessors text").GetComponent<TMP_InputField>();
     }
 
     // Update is called once per frame

@@ -16,6 +16,8 @@ public class NodeGameObject : MonoBehaviour
     public List<Connection> predecessors;
     public GraphNode node;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
