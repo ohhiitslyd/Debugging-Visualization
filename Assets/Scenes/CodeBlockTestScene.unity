@@ -288,7 +288,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneBlockPrefab: {fileID: 5622668386101063863, guid: 8172571faf0c448ef9a3e384b6e9eb43,
     type: 3}
+  edgePrefab: {fileID: 0}
   filename: angr_jsons/simple_debug__angr
+  testNodes: []
+  movingThreshold: 0.03
 --- !u!4 &147545012
 Transform:
   m_ObjectHideFlags: 0
@@ -341,8 +344,8 @@ Camera:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0.7328021, b: 0.8113208, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
