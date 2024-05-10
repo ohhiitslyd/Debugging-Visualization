@@ -11,6 +11,8 @@ public class Panel : MonoBehaviour
     public TMP_InputField title;
     public TMP_InputField address;
     public TMP_InputField description;
+    public TMP_InputField successorsText;
+    public TMP_InputField predecessorsText;
 
 
     private void Awake()
@@ -34,7 +36,9 @@ public class Panel : MonoBehaviour
     {
         title = transform.Find("Canvas/Panel/title").GetComponent<TMP_InputField>();
         address = transform.Find("Canvas/Panel/address").GetComponent<TMP_InputField>();
-        description = transform.Find("Canvas/Panel/description").GetComponent<TMP_InputField>();
+        description = transform.Find("Canvas/Panel/basic block/basic block text body").GetComponent<TMP_InputField>();
+        successorsText = transform.Find("Canvas/Panel/successors/successors text").GetComponent<TMP_InputField>();
+        predecessorsText = transform.Find("Canvas/Panel/predecessors/predecessors text").GetComponent<TMP_InputField>();
     }
 
     // Update is called once per frame

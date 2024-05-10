@@ -9,6 +9,11 @@ public class Connection
 {
     public int target;
     public string type;
+
+    public override string ToString()
+    {
+        return $"{type} Address: {target}";
+    }
 }
 
 [Serializable]

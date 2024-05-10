@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using UnityEngine.UI;
+using System.Linq;
 
 public class NodeGameObject : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class NodeGameObject : MonoBehaviour
     public string nodeName;
     public int function_address;
     public List<string> instructions;
+    public List<Connection> successors;
+    public List<Connection> predecessors;
     public GraphNode node;
 
     // Start is called before the first frame update
@@ -37,6 +40,8 @@ public class NodeGameObject : MonoBehaviour
         nodeName = node.name;
         function_address = node.function_address;
         instructions = node.instructions;
+        successors = node.successors;
+        predecessors = node.predecessors;
     }
 
     void OnMouseDown()
@@ -46,6 +51,9 @@ public class NodeGameObject : MonoBehaviour
         Panel.Instance.title.text = node.name;
         Panel.Instance.address.text = node.address.ToString();
         Panel.Instance.description.text = string.Join("\n", node.instructions.ToArray());
+        Panel.Instance.successorsText.text = string.Join("\n", node.successors.Select(s => s.ToString()).ToArray());
+        Panel.Instance.predecessorsText.text = string.Join("\n", node.predecessors.Select(s => s.ToString()).ToArray());
+        
 
     }
 }
