@@ -25,10 +25,15 @@ public class SceneBlockObj : MonoBehaviour
             instructionText = transform.Find("VerticalAdjust/Canvas/TextInCodeBlock").GetComponent<TMP_Text>();
         }
         
+
         if (node != null)
         {
+            
             nameText.text = node.name;
             instructionText.text = String.Join("\n", node.instructions);
+        }
+        else {
+            Debug.Log("Node is null");
         }
     }
 }

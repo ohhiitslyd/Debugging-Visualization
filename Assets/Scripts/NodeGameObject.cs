@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
+using UnityEngine.UI;
 
 public class NodeGameObject : MonoBehaviour
 {
@@ -39,7 +42,7 @@ public class NodeGameObject : MonoBehaviour
     void OnMouseDown()
     {
         Panel.Instance.panel.SetActive(true);
-        Debug.Log(node.name);
+        Debug.Log("Node name: " + node.name);
         Panel.Instance.title.text = node.name;
         Panel.Instance.address.text = node.address.ToString();
         Panel.Instance.description.text = string.Join("\n", node.instructions.ToArray());

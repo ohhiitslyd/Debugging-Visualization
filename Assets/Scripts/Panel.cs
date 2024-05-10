@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Panel : MonoBehaviour
 {
     public static Panel Instance;
     public GameObject panel;
-    public TextMeshProUGUI title;
-    public TextMeshProUGUI address;
-    public TextMeshProUGUI description;
+    public TMP_InputField title;
+    public TMP_InputField address;
+    public TMP_InputField description;
 
 
     private void Awake()
@@ -24,12 +25,16 @@ public class Panel : MonoBehaviour
         {
             Instance = this;
         }
+
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        title = transform.Find("Canvas/Panel/title").GetComponent<TMP_InputField>();
+        address = transform.Find("Canvas/Panel/address").GetComponent<TMP_InputField>();
+        description = transform.Find("Canvas/Panel/description").GetComponent<TMP_InputField>();
     }
 
     // Update is called once per frame
