@@ -549,6 +549,8 @@ MonoBehaviour:
   nodeName: 
   function_address: 0
   instructions: []
+  successors: []
+  predecessors: []
 --- !u!114 &6089583731909463479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,6 +567,8 @@ MonoBehaviour:
   title: {fileID: 0}
   address: {fileID: 0}
   description: {fileID: 0}
+  successorsText: {fileID: 0}
+  predecessorsText: {fileID: 0}
 --- !u!1 &7044126458362701804
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,8 +628,8 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
