@@ -16,7 +16,7 @@ public class NodeGameObject : MonoBehaviour
     public List<Connection> predecessors;
     public GraphNode node;
 
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -48,14 +48,15 @@ public class NodeGameObject : MonoBehaviour
 
     void OnMouseDown()
     {
-        Panel.Instance.panel.SetActive(true);
-        Debug.Log("Node name: " + node.name);
-        Panel.Instance.title.text = node.name;
-        Panel.Instance.address.text = node.address.ToString();
-        Panel.Instance.description.text = string.Join("\n", node.instructions.ToArray());
-        Panel.Instance.successorsText.text = string.Join("\n", node.successors.Select(s => s.ToString()).ToArray());
-        Panel.Instance.predecessorsText.text = string.Join("\n", node.predecessors.Select(s => s.ToString()).ToArray());
-        
+        if(!Input.GetKey(KeyCode.Space)){
+            Panel.Instance.panel.SetActive(true);
+            Debug.Log("Node name: " + node.name);
+            Panel.Instance.title.text = node.name;
+            Panel.Instance.address.text = node.address.ToString();
+            Panel.Instance.description.text = string.Join("\n", node.instructions.ToArray());
+            Panel.Instance.successorsText.text = string.Join("\n", node.successors.Select(s => s.ToString()).ToArray());
+            Panel.Instance.predecessorsText.text = string.Join("\n", node.predecessors.Select(s => s.ToString()).ToArray());
+        }
 
     }
 }
