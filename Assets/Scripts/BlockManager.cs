@@ -7,8 +7,16 @@ using UnityEngine;
 
 public class Edge
 {
+    public string type;
     public GameObject from;
     public GameObject to;
+}
+
+public class NodeEdge
+{
+    public string type;
+    public GraphNode from;
+    public GraphNode to;
 }
 
 public class BlockManager : MonoBehaviour
@@ -278,7 +286,8 @@ public class BlockManager : MonoBehaviour
         if (updatingNodes && testNodes.Count > 0 && testEdges.Count > 0)
         {
             UpdateGraphLayout(testNodes, testEdges, 40f, 1f, 1f);
-        } else if(updatedNodes && !addedEdges)
+        }
+        else if (updatedNodes && !addedEdges)
         {
             CreateGraphEdges();
         }
