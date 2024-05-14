@@ -214,19 +214,31 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
             Debug.Log($"Function: {function.name} has {function.nodes.Count} nodes and {functionToEdges[function].Count} edges");
         }
 
-        positionFunctionNodes();
-        // createFunctionPanels();
-        // positionFunctions();
 
+        StartCoroutine(MakeGraph());
+
+
+    }
+
+
+    IEnumerator MakeGraph()
+    {
+        yield return new WaitUntil(() => positionFunctionNodes());
+        yield return new WaitUntil(() => createFunctionPanels());
+        yield return new WaitUntil(() => positionFunctions());
+        yield return new WaitUntil(() => placeEdges());
+    }
+    bool placeEdges()
+    {
         foreach (Function function in functionToNodes.Keys)
         {
             List<Edge> functionEdges = functionToEdges[function];
             CreateGraphEdges(functionEdges);
         }
+        return true;
 
     }
-
-    void positionFunctions()
+    bool positionFunctions()
     {
         List<GameObject> functionObjs = new List<GameObject>();
         List<Edge> functionEdges = new List<Edge>();
@@ -263,6 +275,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
             functionObj.transform.position = new Vector3(i * spacing, 0f, 0f);
         }
         Debug.Log("Function placement complete");
+        return true;
     }
 
     GameObject createFunctionPanel(Function function)
@@ -293,7 +306,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         return panel;
     }
 
-    void createFunctionPanels()
+    bool createFunctionPanels()
     {
         foreach (Function function in functionToNodes.Keys)
         {
@@ -301,6 +314,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
             GameObject panel = createFunctionPanel(function);
             panel.transform.parent = functionObj.transform;
         }
+        return true;
     }
 
     private void CreateGraphEdges(List<Edge> edges)
@@ -338,7 +352,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
     }
 
 
-    void positionFunctionNodes()
+    bool positionFunctionNodes()
     {
         updatingNodes = true;
         while (updatingNodes)
@@ -353,7 +367,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
             }
             if (globalMaxVelocity < movingThreshold) updatingNodes = false;
         }
-
+        return true;
     }
 
     // Start: Initializing lists and adding two test blocks
@@ -494,6 +508,12 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         // }
         // if (globalMaxVelocity < movingThreshold) updatingNodes = false;
 
+
+        // call placeedges when I press k
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            placeEdges();
+        }
     }
 
     // public void ChangeUIText()
