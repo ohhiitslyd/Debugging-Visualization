@@ -58,5 +58,9 @@ public class NodeGameObject : MonoBehaviour
             Panel.Instance.predecessorsText.text = string.Join("\n", node.predecessors.Select(s => s.ToString()).ToArray());
         }
 
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            GetComponent<Outline>().enabled = !GetComponent<Outline>().enabled;
+        }
     }
 }
