@@ -493,7 +493,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1661925483}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31269586, y: -0.11601057, z: 0.038376063, w: 0.9419608}
+  m_LocalRotation: {x: -0.24360758, y: 0.32626387, z: -0.087422185, w: -0.909156}
   m_LocalPosition: {x: 369.03534, y: 80.71716, z: -94.48759}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -516,7 +516,7 @@ MonoBehaviour:
   shiftMultiplier: 2
   zoomSpeed: 10
   minOrthographicSize: 4.5
-  maxOrthographicSize: 115
+  maxOrthographicSize: 130
   zoomLerpSpeed: 10
   keyboardPanSpeed: 5
   activeKeyboardMovement: 0
