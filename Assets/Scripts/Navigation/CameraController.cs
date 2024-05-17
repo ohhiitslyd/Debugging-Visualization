@@ -30,8 +30,12 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        HandleDragMovement();
-        HandleTrackedZoom();
+
+        if(Input.GetKey(KeyCode.Space)){
+            HandleDragMovement();
+            HandleTrackedZoom();
+        }
+
 
         if(activeKeyboardMovement){
             HandleKeyboardMovement();
