@@ -16,7 +16,8 @@ public class ButtonControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.Escape)){
+        if (Input.GetKey(KeyCode.Escape))
+        {
             ClosePanel();
         }
     }
@@ -24,6 +25,8 @@ public class ButtonControl : MonoBehaviour
     public void ClosePanel()
     {
         Panel.Instance.panel.SetActive(false);
+        StateManager.Instance.selectedBlock = -1;
+        StateManager.Instance.UpdateMaterials();
         cameraController.ResetFocus();
     }
 }

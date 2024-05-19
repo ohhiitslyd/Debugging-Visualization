@@ -8,7 +8,6 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
 {
     List<SceneBlock> sceneBlocks;
     List<GameObject> sceneBlockObjs;
-    public Dictionary<int, GameObject> sceneBlockDict;
     // private GraphSctructure graph;
     public GameObject sceneBlockPrefab;
     public GameObject edgePrefab;
@@ -115,7 +114,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
                 GameObject obj = Instantiate(sceneBlockPrefab, position, Quaternion.identity);
                 obj.transform.parent = functionObj.transform;
                 sceneBlockObjs.Add(obj);
-                sceneBlockDict[node.address] = obj;
+                StateManager.Instance.sceneBlockDict[node.address] = obj;
                 // test force thing
                 if (funcIndex == 0)
                 {
@@ -173,7 +172,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
                     Edge edge = new Edge
                     {
                         from = nodeObj,
-                        to = sceneBlockDict[succ.target],
+                        to = StateManager.Instance.sceneBlockDict[succ.target],
                         type = succ.type,
                     };
                     functionEdges.Add(edge);
@@ -421,7 +420,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
     {
         sceneBlocks = new List<SceneBlock>();
         sceneBlockObjs = new List<GameObject>();
-        sceneBlockDict = new Dictionary<int, GameObject>();
+        StateManager.Instance.sceneBlockDict = new Dictionary<int, GameObject>();
         testEdges = new List<Edge>();
         testNodes = new List<GameObject>();
 
@@ -484,7 +483,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
 
             GameObject obj = Instantiate(sceneBlockPrefab, position, Quaternion.identity);
             sceneBlockObjs.Add(obj);
-            sceneBlockDict[node.address] = obj;
+            StateManager.Instance.sceneBlockDict[node.address] = obj;
 
             obj.GetComponent<SceneBlockObj>().SetGraphNode(node);
             obj.GetComponent<NodeGameObject>().SetNode(node);

@@ -549,8 +549,6 @@ MonoBehaviour:
   instructions: []
   successors: []
   predecessors: []
-  normal: {fileID: 2100000, guid: fd768794104ab46ab8348c44c573b13c, type: 2}
-  unfocused: {fileID: 2100000, guid: cf9e9c88a33484633a3f71067dffc15e, type: 2}
 --- !u!114 &6089583731909463479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -822,17 +820,17 @@ PrefabInstance:
     - target: {fileID: 419408109279848301, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5121992
+      value: 0.48956
       objectReference: {fileID: 0}
     - target: {fileID: 419408109279848301, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5693618
+      value: 0.544196
       objectReference: {fileID: 0}
     - target: {fileID: 419408109279848301, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.4521542
+      value: 3.299569
       objectReference: {fileID: 0}
     - target: {fileID: 419408109279848301, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
         type: 3}
@@ -872,12 +870,12 @@ PrefabInstance:
     - target: {fileID: 419408109279848301, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 187.4
+      value: 196.6
       objectReference: {fileID: 0}
     - target: {fileID: 419408109279848301, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -39
+      value: -49
       objectReference: {fileID: 0}
     - target: {fileID: 419408109279848301, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
         type: 3}
