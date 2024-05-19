@@ -9,13 +9,21 @@ public class CameraController : MonoBehaviour
     [SerializeField] float maxOrthographicSize = 50f;
     [SerializeField] float zoomLerpSpeed = 10f; // Speed at which zoom lerps
     [SerializeField] float keyboardPanSpeed = 5f; // Speed for WASD navigation
-
+    [SerializeField] float focusLerpSpeed = 9f; // Speed at which focus lerps
+    // [SerializeField] float unfocusLerpSpeed = 9f;
     [SerializeField] bool activeKeyboardMovement = false;
 
     private Camera cam;
     private Vector3 dragOrigin;
     private bool isDragging;
     private float targetOrthographicSize;
+    private Vector3 targetPosition;
+    private bool isFocusing = false; // used by camera to understand when to lerp certain controls
+    public bool focusMode = false; // used by modules outside of camera to understand camera state
+
+
+    private Vector3 originalPosition;
+    private float originalOrthographicSize;
 
     private void Awake()
     {
@@ -25,24 +33,42 @@ public class CameraController : MonoBehaviour
         cam.orthographic = true;
         transform.rotation = Quaternion.Euler(30f, -45f, 0f); // Adjust as needed
 
+        originalPosition = transform.position;
+        originalOrthographicSize = cam.orthographicSize;
         targetOrthographicSize = cam.orthographicSize;
+        targetPosition = transform.position;
     }
 
     private void Update()
     {
+        if (isFocusing)
+        {
+            // Smoothly interpolate the camera position and orthographic size to the target values
+            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * focusLerpSpeed);
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetOrthographicSize, Time.deltaTime * focusLerpSpeed);
 
-        if(Input.GetKey(KeyCode.Space)){
-            HandleDragMovement();
-            HandleTrackedZoom();
+            // Check if the camera has reached the target position and orthographic size
+            if (Vector3.Distance(transform.position, targetPosition) < 0.01f && Mathf.Abs(cam.orthographicSize - targetOrthographicSize) < 0.01f)
+            {
+                isFocusing = false;
+            }
         }
+        else
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                HandleDragMovement();
+                HandleTrackedZoom();
+            }
 
+            if (activeKeyboardMovement)
+            {
+                HandleKeyboardMovement();
+            }
 
-        if(activeKeyboardMovement){
-            HandleKeyboardMovement();
+            // Smoothly interpolate towards the target orthographic size
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetOrthographicSize, Time.deltaTime * zoomLerpSpeed);
         }
-
-        // Smoothly interpolate towards the target orthographic size
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetOrthographicSize, Time.deltaTime * zoomLerpSpeed);
     }
 
     private void HandleDragMovement()
@@ -62,6 +88,7 @@ public class CameraController : MonoBehaviour
         {
             Vector3 difference = dragOrigin - cam.ScreenToWorldPoint(Input.mousePosition);
             transform.position += difference;
+            targetPosition = transform.position; // Update target position during drag
         }
     }
 
@@ -88,6 +115,7 @@ public class CameraController : MonoBehaviour
         }
 
         transform.position += movement;
+        targetPosition = transform.position; // Update target position during keyboard movement
     }
 
     private void HandleTrackedZoom()
@@ -105,6 +133,26 @@ public class CameraController : MonoBehaviour
             Vector3 offset = worldPosBeforeZoom - worldPosAfterZoom;
 
             transform.position += offset;
+            targetPosition = transform.position; // Update target position during zoom
         }
+    }
+
+    public void FocusOnBlock(Vector3 blockPosition)
+    {
+        originalPosition = transform.position;
+        originalOrthographicSize = cam.orthographicSize;
+
+        targetPosition = blockPosition;
+        targetOrthographicSize = 5f; // Fixed orthographic size for focusing on blocks
+        isFocusing = true;
+        focusMode = true;
+    }
+
+    public void ResetFocus()
+    {
+        targetPosition = originalPosition;
+        targetOrthographicSize = originalOrthographicSize;
+        isFocusing = true;
+        focusMode = false;
     }
 }
