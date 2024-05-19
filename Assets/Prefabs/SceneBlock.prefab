@@ -549,6 +549,8 @@ MonoBehaviour:
   instructions: []
   successors: []
   predecessors: []
+  normal: {fileID: 2100000, guid: fd768794104ab46ab8348c44c573b13c, type: 2}
+  unfocused: {fileID: 2100000, guid: cf9e9c88a33484633a3f71067dffc15e, type: 2}
 --- !u!114 &6089583731909463479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,6 +752,32 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Colors.m_NormalColor.r
       value: 0.8558018
+      objectReference: {fileID: 0}
+    - target: {fileID: 366566545098119243, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 366566545098119243, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 366566545098119243, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 11500000, guid: 9c45120809d744d60bdc4338ea82446d,
+        type: 3}
+    - target: {fileID: 366566545098119243, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 366566545098119243, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: ButtonControl, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 419408109279848301, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
         type: 3}

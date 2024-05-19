@@ -465,7 +465,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -60
+  near clip plane: -500
   far clip plane: 1000
   field of view: 60
   orthographic: 1
@@ -519,7 +519,9 @@ MonoBehaviour:
   maxOrthographicSize: 130
   zoomLerpSpeed: 10
   keyboardPanSpeed: 5
+  focusLerpSpeed: 10
   activeKeyboardMovement: 0
+  focusMode: 0
 --- !u!1 &2053725745
 GameObject:
   m_ObjectHideFlags: 0
