@@ -15,12 +15,14 @@ public class NodeGameObject : MonoBehaviour
     public List<Connection> successors;
     public List<Connection> predecessors;
     public GraphNode node;
+
     private CameraController cameraController;
 
     private bool myFocus = false; // if current block is being looked at; currently only toggled back to false when pressed ESC
 
 
-
+    public bool myHighlight = false;
+    private BlockManagerFunctionPlacement blockManager;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,9 @@ public class NodeGameObject : MonoBehaviour
         // node.name = nodeName;
         // node.function_address = function_address;
         // node.instructions = instructions;
+
+        // TODO: - flora. temp write like this, will change later after we turn the blockmanager as singleton
+        blockManager = GameObject.Find("BlockManger").GetComponent<BlockManagerFunctionPlacement>();
     }
 
     // Update is called once per frame
@@ -84,9 +89,36 @@ public class NodeGameObject : MonoBehaviour
             StateManager.Instance.UpdateMaterials();
         }
 
+        // TODO: - flora. after we focus the node, highlight outline is hard to see
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            GetComponent<Outline>().enabled = !GetComponent<Outline>().enabled;
+            SetHighlight();
         }
+    }
+
+    private void SetHighlight()
+    {
+        // for itself
+        GetComponent<Outline>().enabled = !myHighlight;
+        myHighlight = !myHighlight;
+
+        // for edges connected to it
+        foreach (Edge edge in blockManager.GetAllEdges())
+        {
+            NodeGameObject fromNode = edge.from.GetComponent<NodeGameObject>();
+            NodeGameObject toNode = edge.to.GetComponent<NodeGameObject>();
+
+            if (fromNode.myHighlight && toNode.myHighlight)
+            {
+                Debug.Log("+++++++++");
+                edge.Highlight();
+            }
+            else
+            {
+                edge.Unhighlight();
+            }
+        }
+
+
     }
 }

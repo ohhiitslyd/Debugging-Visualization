@@ -332,6 +332,9 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
             GameObject edgeObj = Instantiate(edgePrefab, Vector3.zero, Quaternion.identity);
             Arrow.ArrowRenderer animatedArrowRenderer = edgeObj.GetComponent<Arrow.ArrowRenderer>();
             animatedArrowRenderer.SetPositions(fromEdgePoint, toEdgePoint);
+
+            Debug.Log("==== add edge obj into edge");
+            edge.edgeObj = edgeObj;
         }
     }
 
@@ -524,4 +527,11 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
     //         sceneBlocks[i].codeBlockText.text = "This is a new body paragraph";
     //     }
     // }
+
+
+    // TODO: - flora. consider the edges among all functions?
+    public List<Edge> GetAllEdges()
+    {
+        return functionToEdges.Values.SelectMany(edges => edges).ToList();
+    }
 }

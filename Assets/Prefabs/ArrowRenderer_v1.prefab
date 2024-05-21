@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1706883751150292, guid: 56aa545fd16dc4e1dba9bcc9eb0b2ccc, type: 3}
       propertyPath: m_Name
-      value: ArrowRenderer 2
+      value: ArrowRenderer_v1
       objectReference: {fileID: 0}
     - target: {fileID: 4774183516983956, guid: 56aa545fd16dc4e1dba9bcc9eb0b2ccc, type: 3}
       propertyPath: m_RootOrder
@@ -81,5 +81,27 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1706883751150292, guid: 56aa545fd16dc4e1dba9bcc9eb0b2ccc,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7359686527400508483}
   m_SourcePrefab: {fileID: 100100000, guid: 56aa545fd16dc4e1dba9bcc9eb0b2ccc, type: 3}
+--- !u!1 &3027817249783206656 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1706883751150292, guid: 56aa545fd16dc4e1dba9bcc9eb0b2ccc,
+    type: 3}
+  m_PrefabInstance: {fileID: 3027236822859764180}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-7359686527400508483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3027817249783206656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e92c223cc6d4ea78dceb81368545ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
