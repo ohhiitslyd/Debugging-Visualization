@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.10627161, g: 0.041384835, b: 0.2830189, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -303,7 +303,7 @@ Transform:
   m_GameObject: {fileID: 713420792}
   serializedVersion: 2
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 490, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -362,6 +362,53 @@ MonoBehaviour:
   filename: angr_jsons/simple_debug__angr
   testNodes: []
   movingThreshold: 2
+--- !u!1 &1534768125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1534768127}
+  - component: {fileID: 1534768126}
+  m_Layer: 0
+  m_Name: StateManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1534768126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534768125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad980785c73b1446c98758c1c163e234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedBlock: -1
+  normal: {fileID: 2100000, guid: fd768794104ab46ab8348c44c573b13c, type: 2}
+  unfocused: {fileID: 2100000, guid: cf9e9c88a33484633a3f71067dffc15e, type: 2}
+--- !u!4 &1534768127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534768125}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 206.98508, y: -15.658436, z: 122.10423}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1661925483
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,11 +512,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -60
+  near clip plane: -500
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 114
+  orthographic size: 116.82
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -493,7 +540,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1661925483}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31269586, y: -0.11601057, z: 0.038376063, w: 0.9419608}
+  m_LocalRotation: {x: -0.24360758, y: 0.32626387, z: -0.087422185, w: -0.909156}
   m_LocalPosition: {x: 369.03534, y: 80.71716, z: -94.48759}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -516,10 +563,12 @@ MonoBehaviour:
   shiftMultiplier: 2
   zoomSpeed: 10
   minOrthographicSize: 4.5
-  maxOrthographicSize: 115
+  maxOrthographicSize: 130
   zoomLerpSpeed: 10
   keyboardPanSpeed: 5
+  focusLerpSpeed: 10
   activeKeyboardMovement: 0
+  focusMode: 0
 --- !u!1 &2053725745
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,3 +622,4 @@ SceneRoots:
   - {fileID: 2053725747}
   - {fileID: 1329650545}
   - {fileID: 600774473}
+  - {fileID: 1534768127}
