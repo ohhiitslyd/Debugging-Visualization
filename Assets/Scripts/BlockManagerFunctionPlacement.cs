@@ -225,8 +225,11 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         yield return new WaitUntil(() => positionFunctionNodes());
         yield return new WaitUntil(() => createFunctionPanels());
         yield return new WaitUntil(() => positionFunctions());
+        // TODO: - flora. it is ugly....
+        yield return new WaitForSeconds(1f);
         yield return new WaitUntil(() => placeEdges());
     }
+
     bool placeEdges()
     {
         foreach (Function function in functionToNodes.Keys)
@@ -323,7 +326,6 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
             Vector3 fromCenter = edge.from.transform.position;
             Vector3 toCenter = edge.to.transform.position;
 
-            // 获取交点
             Vector3 fromEdgePoint = FindClosestIntersectionPoint(fromCenter, toCenter, edge.from.transform.localScale * 0.5f);
             Vector3 toEdgePoint = FindClosestIntersectionPoint(toCenter, fromCenter, edge.to.transform.localScale * 0.5f);
 
@@ -338,14 +340,12 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         Vector3 direction = (target - center).normalized;
         float distance = Vector3.Distance(center, target);
 
-        // 使用射线投射找到交点
         if (Physics.Raycast(center, direction, out RaycastHit hit, distance))
         {
             return hit.point;
         }
         else
         {
-            // 如果没有交点，默认返回目标中心（这种情况不应该发生，因为目标是盒子）
             return target;
         }
     }

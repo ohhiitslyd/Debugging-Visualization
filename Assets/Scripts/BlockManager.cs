@@ -251,7 +251,6 @@ public class BlockManager : MonoBehaviour
             Vector3 fromCenter = edge.from.transform.position;
             Vector3 toCenter = edge.to.transform.position;
 
-            // 获取交点
             Vector3 fromEdgePoint = FindClosestIntersectionPoint(fromCenter, toCenter, edge.from.transform.localScale * 0.5f);
             Vector3 toEdgePoint = FindClosestIntersectionPoint(toCenter, fromCenter, edge.to.transform.localScale * 0.5f);
 
@@ -267,14 +266,12 @@ public class BlockManager : MonoBehaviour
         Vector3 direction = (target - center).normalized;
         float distance = Vector3.Distance(center, target);
 
-        // 使用射线投射找到交点
         if (Physics.Raycast(center, direction, out RaycastHit hit, distance))
         {
             return hit.point;
         }
         else
         {
-            // 如果没有交点，默认返回目标中心（这种情况不应该发生，因为目标是盒子）
             return target;
         }
     }
