@@ -36,19 +36,20 @@ public class StateManager : MonoBehaviour
         foreach (int currKey in StateManager.Instance.sceneBlockDict.Keys)
         {
             GameObject currNode = StateManager.Instance.sceneBlockDict[currKey];
+            GameObject cube = currNode.transform.GetChild(2).GetChild(0).gameObject;
             if (selectedBlock == -1)
             {
-                currNode.GetComponent<Renderer>().material = normal;
+                cube.GetComponent<Renderer>().material = normal;
             }
             else
             {
                 if (currKey == selectedBlock)
                 { // Change me right now
-                    currNode.GetComponent<Renderer>().material = normal;
+                    cube.GetComponent<Renderer>().material = normal;
                 }
                 else
                 {
-                    currNode.GetComponent<Renderer>().material = unfocused;
+                    cube.GetComponent<Renderer>().material = unfocused;
                 }
             }
         }
