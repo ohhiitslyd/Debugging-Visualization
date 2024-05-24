@@ -68,7 +68,7 @@ public class NodeGameObject : MonoBehaviour
         predecessors = node.predecessors;
     }
 
-    void OnMouseDown()
+    public void Click()
     {
 
         if (!Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.LeftShift))

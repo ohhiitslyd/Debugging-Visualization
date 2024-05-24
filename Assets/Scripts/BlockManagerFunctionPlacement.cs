@@ -23,9 +23,11 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
     public Dictionary<Function, List<Edge>> functionToEdges;
     public Dictionary<Function, List<GameObject>> functionToNodes;
     public Dictionary<int, GameObject> functionAddrToFunctionGameObject;
+    public Dictionary<GameObject, GameObject> functionPanelGameObjectDict; // function gameobject to panel gameobject
     public List<NodeEdge> edgesBetweenFunctions;
 
-
+    [SerializeField] private float emptyHeight = 3f;
+    [SerializeField] private float instructionHeight = 0.5f;
     private bool updatingNodes;
 
     private string dottedGrayArrowEdgeType = "dotted_gray_arrow";
@@ -81,6 +83,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         addrToFunction = Function.AddressToFunctionFromGraphStructure(graphStructure);
         functionAddrToFunctionGameObject = new Dictionary<int, GameObject>();
         edgesBetweenFunctions = new List<NodeEdge>();
+        functionPanelGameObjectDict = new Dictionary<GameObject, GameObject>();
 
         List<Function> functions = addrToFunction.Values.ToList();
         functions.Sort((x, y) => y.nodes.Count - x.nodes.Count);
@@ -270,11 +273,16 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         //     if (functionMaxVelocity < movingThreshold) updatingNodes = false;
         // }
         List<GameObject> sortedFunctionObjs = SortFunctionNodes(functionObjs, functionEdges);
-        float spacing = 50f;
+        float spacing = 10f;
+        Vector3 currPlacement = Vector3.zero;
         for (int i = 0; i < sortedFunctionObjs.Count; i++)
         {
             GameObject functionObj = sortedFunctionObjs[i];
-            functionObj.transform.position = new Vector3(i * spacing, 0f, 0f);
+            GameObject panel = functionPanelGameObjectDict[functionObj];
+
+            currPlacement += new Vector3(panel.transform.localScale.x / 2 + spacing, 0, 0);
+            functionObj.transform.position = currPlacement;
+            currPlacement += new Vector3(panel.transform.localScale.x / 2, 0, 0);
         }
         Debug.Log("Function placement complete");
         return true;
@@ -291,11 +299,12 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         float maxZ = float.MinValue;
         foreach (GameObject node in functionNodes)
         {
-            Transform nodeTransform = node.transform;
-            float bigx = nodeTransform.position.x + 0.5f * nodeTransform.localScale.x;
-            float smallx = nodeTransform.position.x - 0.5f * nodeTransform.localScale.x;
-            float bigz = nodeTransform.position.z + 0.5f * nodeTransform.localScale.z;
-            float smallz = nodeTransform.position.z - 0.5f * nodeTransform.localScale.z;
+            Transform cubeParentTransform = node.transform.GetChild(2);
+            // Transform cubeParentTransform = node.transform;
+            float bigx = cubeParentTransform.position.x + 0.5f * cubeParentTransform.localScale.x;
+            float smallx = cubeParentTransform.position.x - 0.5f * cubeParentTransform.localScale.x;
+            float bigz = cubeParentTransform.position.z;
+            float smallz = cubeParentTransform.position.z - cubeParentTransform.localScale.z;
             if (bigx > maxX) maxX = bigx;
             if (smallx < minX) minX = smallx;
             if (bigz > maxZ) maxZ = bigz;
@@ -315,6 +324,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
             GameObject functionObj = functionAddrToFunctionGameObject[function.address];
             GameObject panel = createFunctionPanel(function);
             panel.transform.parent = functionObj.transform;
+            functionPanelGameObjectDict[functionObj] = panel;
         }
         return true;
     }
@@ -353,6 +363,10 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         }
     }
 
+    float nodeHeight(int numInstructions)
+    {
+        return emptyHeight + (numInstructions + 1) * instructionHeight; // +1 for extra padding at the bottom
+    }
 
     bool positionFunctionNodes()
     {
@@ -368,6 +382,32 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
                 if (functionMaxVelocity > globalMaxVelocity) globalMaxVelocity = functionMaxVelocity;
             }
             if (globalMaxVelocity < movingThreshold) updatingNodes = false;
+        }
+        foreach (Function function in functionToNodes.Keys)
+        {
+            List<GameObject> nodeObjs = functionToNodes[function];
+            nodeObjs.Sort((x, y) => y.transform.position.z.CompareTo(x.transform.position.z)); // sort by z position
+
+            for (int i = 0; i < nodeObjs.Count; i++)
+            {
+                GameObject nodeObj = nodeObjs[i];
+                Debug.Log(nodeObj.transform.position.z);
+                NodeGameObject nodeScript = nodeObj.GetComponent<NodeGameObject>();
+                int numInstructions = nodeScript.node.instructions.Count;
+                Transform cubeParentTransform = nodeObj.transform.GetChild(2);
+                float prevHeight = cubeParentTransform.localScale.x; // assume original node is a square
+                float newHeight = nodeHeight(numInstructions);
+                cubeParentTransform.localScale = new Vector3(cubeParentTransform.localScale.x, cubeParentTransform.localScale.y, newHeight);
+                float heightDifference = newHeight - prevHeight;
+                if (heightDifference <= 0) continue;
+                for (int j = i + 1; j < nodeObjs.Count; j++)
+                {
+                    nodeObjs[j].transform.position -= new Vector3(0, 0, heightDifference);
+                }
+            }
+
+
+            // break;
         }
         return true;
     }
