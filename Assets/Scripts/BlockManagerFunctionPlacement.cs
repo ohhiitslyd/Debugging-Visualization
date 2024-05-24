@@ -225,8 +225,11 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         yield return new WaitUntil(() => positionFunctionNodes());
         yield return new WaitUntil(() => createFunctionPanels());
         yield return new WaitUntil(() => positionFunctions());
+        // TODO: - flora. it is ugly....
+        yield return new WaitForSeconds(1f);
         yield return new WaitUntil(() => placeEdges());
     }
+
     bool placeEdges()
     {
         foreach (Function function in functionToNodes.Keys)
@@ -323,13 +326,15 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
             Vector3 fromCenter = edge.from.transform.position;
             Vector3 toCenter = edge.to.transform.position;
 
-            // 获取交点
             Vector3 fromEdgePoint = FindClosestIntersectionPoint(fromCenter, toCenter, edge.from.transform.localScale * 0.5f);
             Vector3 toEdgePoint = FindClosestIntersectionPoint(toCenter, fromCenter, edge.to.transform.localScale * 0.5f);
 
             GameObject edgeObj = Instantiate(edgePrefab, Vector3.zero, Quaternion.identity);
             Arrow.ArrowRenderer animatedArrowRenderer = edgeObj.GetComponent<Arrow.ArrowRenderer>();
             animatedArrowRenderer.SetPositions(fromEdgePoint, toEdgePoint);
+
+            Debug.Log("==== add edge obj into edge");
+            edge.edgeObj = edgeObj;
         }
     }
 
@@ -338,14 +343,12 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         Vector3 direction = (target - center).normalized;
         float distance = Vector3.Distance(center, target);
 
-        // 使用射线投射找到交点
         if (Physics.Raycast(center, direction, out RaycastHit hit, distance))
         {
             return hit.point;
         }
         else
         {
-            // 如果没有交点，默认返回目标中心（这种情况不应该发生，因为目标是盒子）
             return target;
         }
     }
@@ -524,4 +527,11 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
     //         sceneBlocks[i].codeBlockText.text = "This is a new body paragraph";
     //     }
     // }
+
+
+    // TODO: - flora. consider the edges among all functions?
+    public List<Edge> GetAllEdges()
+    {
+        return functionToEdges.Values.SelectMany(edges => edges).ToList();
+    }
 }

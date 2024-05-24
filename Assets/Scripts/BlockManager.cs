@@ -10,6 +10,34 @@ public class Edge
     public string type;
     public GameObject from;
     public GameObject to;
+    public GameObject edgeObj;
+
+    public void Highlight()
+    {
+        //edgeObj.GetComponent<Outline>().enabled = true;
+        //edgeObj.AddComponent<Outline>();
+        //Outline outline = edgeObj.GetComponent<Outline>();
+        //outline.OutlineColor = Color.yellow;
+        //outline.OutlineWidth = 3.0f;
+
+        edgeObj.GetComponent<ArrowController>().Highlight();
+    }
+
+    public void Unhighlight()
+    {
+        //edgeObj.GetComponent<Outline>().enabled = false;
+        //Outline outline = edgeObj.GetComponent<Outline>();
+        //if (outline != null)
+        //{
+        //    edgeObj.GetComponent<Outline>().enabled = false;
+        //}
+        //else
+        //{
+        //    Debug.Log("outline not found on the edgeObj.");
+        //}
+
+        edgeObj.GetComponent<ArrowController>().UnHighLight();
+    }
 }
 
 public class NodeEdge
@@ -251,7 +279,6 @@ public class BlockManager : MonoBehaviour
             Vector3 fromCenter = edge.from.transform.position;
             Vector3 toCenter = edge.to.transform.position;
 
-            // 获取交点
             Vector3 fromEdgePoint = FindClosestIntersectionPoint(fromCenter, toCenter, edge.from.transform.localScale * 0.5f);
             Vector3 toEdgePoint = FindClosestIntersectionPoint(toCenter, fromCenter, edge.to.transform.localScale * 0.5f);
 
@@ -267,14 +294,12 @@ public class BlockManager : MonoBehaviour
         Vector3 direction = (target - center).normalized;
         float distance = Vector3.Distance(center, target);
 
-        // 使用射线投射找到交点
         if (Physics.Raycast(center, direction, out RaycastHit hit, distance))
         {
             return hit.point;
         }
         else
         {
-            // 如果没有交点，默认返回目标中心（这种情况不应该发生，因为目标是盒子）
             return target;
         }
     }
