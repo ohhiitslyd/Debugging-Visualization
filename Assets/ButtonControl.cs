@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ButtonControl : MonoBehaviour
 {
+    public Panel panel;
     private CameraController cameraController;
 
     // Start is called before the first frame update
@@ -24,7 +25,7 @@ public class ButtonControl : MonoBehaviour
 
     public void ClosePanel()
     {
-        Panel.Instance.panel.SetActive(false);
+        panel.panel.SetActive(false);
         StateManager.Instance.selectedBlock = -1;
         StateManager.Instance.UpdateMaterials();
         cameraController.ResetFocus();
