@@ -336,8 +336,8 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
             Vector3 fromCenter = edge.from.transform.position;
             Vector3 toCenter = edge.to.transform.position;
 
-            Vector3 fromEdgePoint = FindClosestIntersectionPoint(fromCenter, toCenter, edge.from.transform.localScale * 0.5f);
-            Vector3 toEdgePoint = FindClosestIntersectionPoint(toCenter, fromCenter, edge.to.transform.localScale * 0.5f);
+            Vector3 fromEdgePoint = FindClosestIntersectionPoint(fromCenter, toCenter, edge.from);
+            Vector3 toEdgePoint = FindClosestIntersectionPoint(toCenter, fromCenter, edge.to);
 
             GameObject edgeObj = Instantiate(edgePrefab, Vector3.zero, Quaternion.identity);
             Arrow.ArrowRenderer animatedArrowRenderer = edgeObj.GetComponent<Arrow.ArrowRenderer>();
@@ -348,19 +348,38 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         }
     }
 
-    private Vector3 FindClosestIntersectionPoint(Vector3 center, Vector3 target, Vector3 halfExtents)
+    private Vector3 FindClosestIntersectionPoint(Vector3 center, Vector3 target, GameObject fromObj)
     {
-        Vector3 direction = (target - center).normalized;
+        //Vector3 direction = (target - center).normalized;
+        //float distance = Vector3.Distance(center, target);
+
+        //if (Physics.Raycast(center, direction, out RaycastHit hit, distance))
+        //{
+        //    return hit.point;
+        //}
+        //else
+        //{
+        //    return target;
+        //}
+
+
+        Vector3 direction = (center - target).normalized;
         float distance = Vector3.Distance(center, target);
 
-        if (Physics.Raycast(center, direction, out RaycastHit hit, distance))
+        RaycastHit[] hits = Physics.RaycastAll(target, direction, distance);
+
+        foreach (RaycastHit hit in hits)
         {
-            return hit.point;
+            Debug.Log("--------");
+            Debug.Log(hit.collider.gameObject.transform.parent.parent.gameObject);
+            if (hit.collider.gameObject.transform.parent.parent.gameObject == fromObj)
+            {
+                return hit.point;
+            }
         }
-        else
-        {
-            return target;
-        }
+
+        Debug.Log("!!!!!!!!!!!!!");
+        return center;
     }
 
     float nodeHeight(int numInstructions)
