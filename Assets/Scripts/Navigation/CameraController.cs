@@ -10,8 +10,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] float zoomLerpSpeed = 10f; // Speed at which zoom lerps
     [SerializeField] float keyboardPanSpeed = 5f; // Speed for WASD navigation
     [SerializeField] float focusLerpSpeed = 9f; // Speed at which focus lerps
-    // [SerializeField] float unfocusLerpSpeed = 9f;
-    [SerializeField] bool activeKeyboardMovement = false;
+    [SerializeField] bool activeKeyboardMovement = false; // Add this line
+    [SerializeField] float blockRotationSpeed = 6f; // Add this line
+
 
     private Camera cam;
     private Vector3 dragOrigin;
@@ -19,11 +20,14 @@ public class CameraController : MonoBehaviour
     private float targetOrthographicSize;
     private Vector3 targetPosition;
     private bool isFocusing = false; // used by camera to understand when to lerp certain controls
-    public bool focusMode = false; // used by modules outside of camera to understand camera state
-
+    private Quaternion originalRotation;
+    private Quaternion targetRotation;
+    private float analyzeYRotation; // Store the Y rotation separately
 
     private Vector3 originalPosition;
     private float originalOrthographicSize;
+
+    public Quaternion IsometricCameraAngles = Quaternion.Euler(30f, -15f, 0f);
 
     private void Awake()
     {
@@ -31,44 +35,90 @@ public class CameraController : MonoBehaviour
 
         // Ensure the camera is orthographic and set it to an isometric angle
         cam.orthographic = true;
-        transform.rotation = Quaternion.Euler(30f, -45f, 0f); // Adjust as needed
+        transform.rotation = IsometricCameraAngles; // Adjust as needed
 
         originalPosition = transform.position;
         originalOrthographicSize = cam.orthographicSize;
         targetOrthographicSize = cam.orthographicSize;
         targetPosition = transform.position;
+
+        originalRotation = transform.rotation;
+        targetRotation = transform.rotation;
+        analyzeYRotation = transform.eulerAngles.y; // Initialize analyze rotation
+    }
+
+    private void Start()
+    {
+        if (StateManager.Instance == null)
+        {
+            Debug.LogError("StateManager.Instance is not initialized in Start().");
+        }
     }
 
     private void Update()
     {
-        if (isFocusing)
+        if (StateManager.Instance == null)
         {
-            // Smoothly interpolate the camera position and orthographic size to the target values
-            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * focusLerpSpeed);
-            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetOrthographicSize, Time.deltaTime * focusLerpSpeed);
-
-            // Check if the camera has reached the target position and orthographic size
-            if (Vector3.Distance(transform.position, targetPosition) < 0.01f && Mathf.Abs(cam.orthographicSize - targetOrthographicSize) < 0.01f)
-            {
-                isFocusing = false;
-            }
+            Debug.LogError("StateManager.Instance is not initialized in Update().");
+            // Exit the method if StateManager is not yet initialized
+            return;
         }
-        else
+
+        switch (StateManager.Instance.currentCameraState)
         {
-            if (Input.GetKey(KeyCode.Space))
-            {
-                HandleDragMovement();
-                HandleTrackedZoom();
-            }
-
-            if (activeKeyboardMovement)
-            {
-                HandleKeyboardMovement();
-            }
-
-            // Smoothly interpolate towards the target orthographic size
-            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetOrthographicSize, Time.deltaTime * zoomLerpSpeed);
+            case StateManager.CameraState.Focus:
+                HandleFocusState();
+                // HandleDefaultState();
+                break;
+            case StateManager.CameraState.Analyze:
+                HandleAnalyzeRotation();
+                break;
+            case StateManager.CameraState.Default:
+            default:
+                HandleDefaultState();
+                break;
         }
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * focusLerpSpeed);
+    }
+
+    private void HandleFocusState()
+    {
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * focusLerpSpeed);
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetOrthographicSize, Time.deltaTime * focusLerpSpeed);
+
+        if (Vector3.Distance(transform.position, targetPosition) < 0.01f && Mathf.Abs(cam.orthographicSize - targetOrthographicSize) < 0.01f && Quaternion.Angle(transform.rotation, targetRotation) < 0.01f)
+        {
+            isFocusing = false;
+        }
+    }
+
+    private void HandleAnalyzeRotation()
+    {
+        float horizontalInput = Input.GetAxis("Mouse X");
+
+        if (Input.GetMouseButton(0))
+        {
+            float rotationAmount = horizontalInput * blockRotationSpeed;
+            analyzeYRotation += rotationAmount;
+            targetRotation = Quaternion.Euler(originalRotation.eulerAngles.x, analyzeYRotation, originalRotation.eulerAngles.z); // Update target rotation only on Y axis
+        }
+    }
+
+    private void HandleDefaultState()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            HandleDragMovement();
+            HandleTrackedZoom();
+        }
+
+        if (activeKeyboardMovement) // Check for keyboard movement
+        {
+            HandleKeyboardMovement();
+        }
+
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetOrthographicSize, Time.deltaTime * zoomLerpSpeed);
     }
 
     private void HandleDragMovement()
@@ -143,16 +193,31 @@ public class CameraController : MonoBehaviour
         originalOrthographicSize = cam.orthographicSize;
 
         targetPosition = blockPosition;
-        targetOrthographicSize = 5f; // Fixed orthographic size for focusing on blocks
+        targetOrthographicSize = 8f; // Fixed orthographic size for focusing on blocks
         isFocusing = true;
-        focusMode = true;
+
+        StateManager.Instance.SetCameraState(StateManager.CameraState.Focus);
     }
 
     public void ResetFocus()
     {
         targetPosition = originalPosition;
         targetOrthographicSize = originalOrthographicSize;
+        targetRotation = originalRotation; // Reset rotation to original
         isFocusing = true;
-        focusMode = false;
+
+        StateManager.Instance.SetCameraState(StateManager.CameraState.Default);
+    }
+
+    public void EnterAnalyzeMode()
+    {
+        analyzeYRotation = transform.eulerAngles.y; // Store the current Y rotation as the starting analyze Y rotation
+        StateManager.Instance.SetCameraState(StateManager.CameraState.Analyze);
+    }
+
+    public void ExitAnalyzeMode()
+    {
+        StateManager.Instance.SetCameraState(StateManager.CameraState.Focus);
+        targetRotation = originalRotation; // Reset rotation to original
     }
 }
