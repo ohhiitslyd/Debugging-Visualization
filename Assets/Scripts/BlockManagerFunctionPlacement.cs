@@ -367,19 +367,6 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
 
     private Vector3 FindClosestIntersectionPoint(Vector3 center, Vector3 target, GameObject fromObj)
     {
-        //Vector3 direction = (target - center).normalized;
-        //float distance = Vector3.Distance(center, target);
-
-        //if (Physics.Raycast(center, direction, out RaycastHit hit, distance))
-        //{
-        //    return hit.point;
-        //}
-        //else
-        //{
-        //    return target;
-        //}
-
-
         Vector3 direction = (center - target).normalized;
         float distance = Vector3.Distance(center, target);
 
@@ -387,15 +374,12 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
 
         foreach (RaycastHit hit in hits)
         {
-            Debug.Log("--------");
-            Debug.Log(hit.collider.gameObject.transform.parent.parent.gameObject);
             if (hit.collider.gameObject.transform.parent.parent.gameObject == fromObj)
             {
                 return hit.point;
             }
         }
 
-        Debug.Log("!!!!!!!!!!!!!");
         return center;
     }
 
