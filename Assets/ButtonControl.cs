@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ButtonControl : MonoBehaviour
 {
+    public Panel panel;
     private CameraController cameraController;
 
     void Start()
@@ -27,7 +28,7 @@ public class ButtonControl : MonoBehaviour
         {
             cameraController.ExitAnalyzeMode();
         }
-        Panel.Instance.panel.SetActive(false);
+        panel.panel.SetActive(false);
         StateManager.Instance.selectedBlock = -1;
         StateManager.Instance.UpdateMaterials();
         cameraController.ResetFocus();
@@ -38,12 +39,12 @@ public class ButtonControl : MonoBehaviour
         if (StateManager.Instance.currentCameraState == StateManager.CameraState.Analyze)
         {
             cameraController.ExitAnalyzeMode();
-            Panel.Instance.rotateIcon.SetActive(false);
+            panel.rotateIcon.SetActive(false);
         }
         else if (StateManager.Instance.currentCameraState == StateManager.CameraState.Focus)
         {
             cameraController.EnterAnalyzeMode();
-            Panel.Instance.rotateIcon.SetActive(true);
+            panel.rotateIcon.SetActive(true);
         }
     }
 }

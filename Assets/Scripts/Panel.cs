@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Panel : MonoBehaviour
 {
-    public static Panel Instance;
+    // public static Panel Instance;
     public GameObject panel;
     public TMP_InputField title;
     public TMP_InputField address;
@@ -16,21 +16,21 @@ public class Panel : MonoBehaviour
     public GameObject rotateIcon;
 
 
-    private void Awake()
-    {
-        // If there is an instance, and it's not me, delete myself.
+    // private void Awake()
+    // {
+    //     // If there is an instance, and it's not me, delete myself.
 
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+    //     if (Instance != null && Instance != this)
+    //     {
+    //         Destroy(this);
+    //     }
+    //     else
+    //     {
+    //         Instance = this;
+    //     }
 
 
-    }
+    // }
 
     // Start is called before the first frame update
     void Start()

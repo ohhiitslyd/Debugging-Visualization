@@ -423,7 +423,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1093, y: -181}
+  m_AnchoredPosition: {x: -1064, y: -270}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7729613816993911971
@@ -673,6 +673,7 @@ MonoBehaviour:
   instructions: []
   successors: []
   predecessors: []
+  panel: {fileID: 6089583731909463479}
   myHighlight: 0
 --- !u!114 &6089583731909463479
 MonoBehaviour:
@@ -1033,7 +1034,7 @@ PrefabInstance:
     - target: {fileID: 419408109279848301, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -49
+      value: -28
       objectReference: {fileID: 0}
     - target: {fileID: 419408109279848301, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
         type: 3}
@@ -1443,6 +1444,11 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.8962264
       objectReference: {fileID: 0}
+    - target: {fileID: 8528271011391332763, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
+        type: 3}
+      propertyPath: panel
+      value: 
+      objectReference: {fileID: 6089583731909463479}
     - target: {fileID: 8686130207401117890, guid: 5a59dac257ee64cedb5db09d82fc2ce5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
