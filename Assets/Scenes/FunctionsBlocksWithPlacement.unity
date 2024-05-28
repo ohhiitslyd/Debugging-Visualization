@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -396,6 +396,7 @@ MonoBehaviour:
   selectedBlock: -1
   normal: {fileID: 2100000, guid: fd768794104ab46ab8348c44c573b13c, type: 2}
   unfocused: {fileID: 2100000, guid: cf9e9c88a33484633a3f71067dffc15e, type: 2}
+  currentCameraState: 0
 --- !u!4 &1534768127
 Transform:
   m_ObjectHideFlags: 0
@@ -570,7 +571,8 @@ MonoBehaviour:
   keyboardPanSpeed: 5
   focusLerpSpeed: 10
   activeKeyboardMovement: 0
-  focusMode: 0
+  blockRotationSpeed: 6
+  IsometricCameraAngles: {x: 0.25660482, y: -0.12607862, z: 0.033782665, w: 0.9576622}
 --- !u!1 &2053725745
 GameObject:
   m_ObjectHideFlags: 0

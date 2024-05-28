@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ButtonControl : MonoBehaviour
@@ -7,27 +5,46 @@ public class ButtonControl : MonoBehaviour
     public Panel panel;
     private CameraController cameraController;
 
-    // Start is called before the first frame update
     void Start()
     {
         cameraController = Camera.main.GetComponent<CameraController>();
-
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
             ClosePanel();
         }
+
+        if (Input.GetKeyUp(KeyCode.R)){
+          ToggleAnalyzeMode();
+        }
     }
 
     public void ClosePanel()
     {
+        if (StateManager.Instance.currentCameraState == StateManager.CameraState.Analyze)
+        {
+            cameraController.ExitAnalyzeMode();
+        }
         panel.panel.SetActive(false);
         StateManager.Instance.selectedBlock = -1;
         StateManager.Instance.UpdateMaterials();
         cameraController.ResetFocus();
+    }
+
+    public void ToggleAnalyzeMode()
+    {
+        if (StateManager.Instance.currentCameraState == StateManager.CameraState.Analyze)
+        {
+            cameraController.ExitAnalyzeMode();
+            panel.rotateIcon.SetActive(false);
+        }
+        else if (StateManager.Instance.currentCameraState == StateManager.CameraState.Focus)
+        {
+            cameraController.EnterAnalyzeMode();
+            panel.rotateIcon.SetActive(true);
+        }
     }
 }

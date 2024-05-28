@@ -72,13 +72,15 @@ public class NodeGameObject : MonoBehaviour
     public void Click()
     {
 
-        if (!Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.LeftShift))
+        if (!Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.LeftShift) && StateManager.Instance.currentCameraState != StateManager.CameraState.Analyze)
         {
+
             foreach (GameObject sceneBlock in StateManager.Instance.sceneBlockDict.Values)
             {
                 sceneBlock.GetComponent<Panel>().panel.SetActive(false);
             }
             panel.panel.SetActive(true);
+            panel.rotateIcon.SetActive(false);
             Debug.Log("Node name: " + node.name);
             panel.title.text = node.name;
             panel.address.text = node.address.ToString();
