@@ -11,6 +11,10 @@ public class StateManager : MonoBehaviour
     public Material normal;
     public Material unfocused;
 
+
+    public enum CameraState { Default, Focus, Analyze }
+    public CameraState currentCameraState = CameraState.Default;
+
     private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
@@ -53,5 +57,10 @@ public class StateManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetCameraState(CameraState newState)
+    {
+        currentCameraState = newState;
     }
 }

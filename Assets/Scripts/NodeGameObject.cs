@@ -15,6 +15,7 @@ public class NodeGameObject : MonoBehaviour
     public List<Connection> successors;
     public List<Connection> predecessors;
     public GraphNode node;
+    public Panel panel;
 
     private CameraController cameraController;
 
@@ -71,15 +72,21 @@ public class NodeGameObject : MonoBehaviour
     public void Click()
     {
 
-        if (!Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.LeftShift))
+        if (!Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.LeftShift) && StateManager.Instance.currentCameraState != StateManager.CameraState.Analyze)
         {
-            Panel.Instance.panel.SetActive(true);
+
+            foreach (GameObject sceneBlock in StateManager.Instance.sceneBlockDict.Values)
+            {
+                sceneBlock.GetComponent<Panel>().panel.SetActive(false);
+            }
+            panel.panel.SetActive(true);
+            panel.rotateIcon.SetActive(false);
             Debug.Log("Node name: " + node.name);
-            Panel.Instance.title.text = node.name;
-            Panel.Instance.address.text = node.address.ToString();
-            Panel.Instance.description.text = string.Join("\n", node.instructions.ToArray());
-            Panel.Instance.successorsText.text = string.Join("\n", node.successors.Select(s => s.ToString()).ToArray());
-            Panel.Instance.predecessorsText.text = string.Join("\n", node.predecessors.Select(s => s.ToString()).ToArray());
+            panel.title.text = node.name;
+            panel.address.text = node.address.ToString();
+            panel.description.text = string.Join("\n", node.instructions.ToArray());
+            panel.successorsText.text = string.Join("\n", node.successors.Select(s => s.ToString()).ToArray());
+            panel.predecessorsText.text = string.Join("\n", node.predecessors.Select(s => s.ToString()).ToArray());
 
             // Assuming each code block has a predefined position and orthographic size
             Vector3 blockPosition = transform.position + new Vector3(0, 0, 0); // Adjust as needed
