@@ -107,7 +107,9 @@ public class CameraController : MonoBehaviour
         {
             float rotationAmount = horizontalInput * blockRotationSpeed;
             analyzeYRotation += rotationAmount;
-            targetRotation = Quaternion.Euler(originalRotation.eulerAngles.x, analyzeYRotation, originalRotation.eulerAngles.z); // Update target rotation only on Y axis
+
+            //targetRotation = Quaternion.Euler(originalRotation.eulerAngles.x, analyzeYRotation, originalRotation.eulerAngles.z); // Update target rotation only on Y axis
+            targetRotation = Quaternion.Euler(targetRotation.eulerAngles.x, analyzeYRotation, targetRotation.eulerAngles.z);
         }
         targetOrthographicSize = focusZoomAmount + 2f;
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetOrthographicSize, Time.deltaTime * focusLerpSpeed);
@@ -258,5 +260,10 @@ public class CameraController : MonoBehaviour
             cubeCanvas.transform.position = new Vector3(cubeCanvas.transform.position.x, cubeCanvas.transform.position.y - blockDeformHeightAmount, cubeCanvas.transform.position.z);
             // cubeCanvas.transform.localScale = new Vector3(cubeCanvas.transform.localScale.x, cubeCanvas.transform.localScale.y / blockDeformScaleAmount, cubeCanvas.transform.localScale.z);
         }
+    }
+
+    public void SetCurrentTargetRotation(Quaternion quaternion)
+    {
+        targetRotation = quaternion;
     }
 }
