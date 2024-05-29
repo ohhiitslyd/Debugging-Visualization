@@ -7,6 +7,12 @@ public class ArrowController : MonoBehaviour
     public Material highlightMat;
     public Material material;
 
+    public void SetMaterial(Material mat)
+    {
+        material = mat;
+        UnHighLight();
+    }
+
     public void Highlight()
     {
         //gameObject.AddComponent<Outline>();

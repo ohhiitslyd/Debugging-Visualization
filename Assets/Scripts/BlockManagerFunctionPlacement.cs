@@ -29,14 +29,8 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
     [SerializeField] private float emptyHeight = 3f;
     [SerializeField] private float instructionHeight = 0.5f;
     private bool updatingNodes;
-
-    private string dottedGrayArrowEdgeType = "dotted_gray_arrow";
-
     [SerializeField] private float movingThreshold = 0.01f;
-    [SerializeField] private Material falseArrowMat;
-    [SerializeField] private Material trueArrowMat;
-    [SerializeField] private Material boringSingleArrowMat;
-    [SerializeField] private Material callArrowMat;
+    [SerializeField] private float arrowHeightBetweenFunctions = 3f;
 
     float UpdateGraphLayout(List<GameObject> nodes, List<Edge> edges, float repulsiveForceConstant, float springForceConstant, float damping, float idealSpringLength)
     {
@@ -164,8 +158,9 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
                 GameObject nodeObj = functionNodes[i];
                 GraphNode node = nodeObj.GetComponent<NodeGameObject>().node;
                 List<Connection> successors = graphStructure.getSuccessors(node.address);
-                foreach (Connection succ in successors)
+                for (int j = 0; j < successors.Count; j++)
                 {
+                    Connection succ = successors[j];
                     if (!StateManager.Instance.sceneBlockDict.ContainsKey(succ.target)) continue;
                     GameObject to = StateManager.Instance.sceneBlockDict[succ.target];
                     if (node.function_address != graphStructure.nodes[succ.target].function_address)
@@ -178,14 +173,19 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
                         });
                         continue;
                     }
+                    string boring_type = "Ijk_Boring";
+                    if (successors.Count == 1) boring_type += "_single";
+                    else if (j == 0) boring_type += "_true";
+                    else boring_type += "_false";
                     Edge edge = new Edge
                     {
                         from = nodeObj,
                         to = to,
-                        type = succ.type,
+                        type = boring_type,
                     };
                     functionEdges.Add(edge);
                 }
+                if (successors.Count > 0 && successors[0].type == "Ijk_Boring") { }
 
                 if (i == 0) continue;
 
@@ -208,7 +208,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
                     {
                         from = functionNodes[i - 1],
                         to = nodeObj,
-                        type = dottedGrayArrowEdgeType,
+                        type = "dotted_gray_arrow",
                     };
                     functionEdges.Add(edge);
                 }
@@ -238,12 +238,12 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         yield return new WaitForSeconds(1f);
         yield return new WaitUntil(() => placeEdges());
         yield return new WaitForSeconds(1f);
-        foreach (Edge edge in edgesBetweenFunctions)
-        {
-            Debug.Log($"Edge from {edge.from.GetComponent<NodeGameObject>().node.name} to {edge.to.GetComponent<NodeGameObject>().node.name} of type {edge.type}");
-        }
+        // foreach (Edge edge in edgesBetweenFunctions)
+        // {
+        //     Debug.Log($"Edge from {edge.from.GetComponent<NodeGameObject>().node.name} to {edge.to.GetComponent<NodeGameObject>().node.name} of type {edge.type}");
+        // }
 
-        CreateGraphEdges(edgesBetweenFunctions);
+        CreateGraphEdges(edgesBetweenFunctions, true);
 
 
     }
@@ -346,12 +346,41 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         return true;
     }
 
-    private void CreateGraphEdges(List<Edge> edges)
+    [SerializeField] private Material falseArrowMat;
+    [SerializeField] private Material trueArrowMat;
+    [SerializeField] private Material boringSingleArrowMat;
+    [SerializeField] private Material callArrowMat;
+    [SerializeField] private Material retArrowMat;
+    [SerializeField] private Material dottedGrayArrowMat;
+    [SerializeField] private Material defaultMat;
+
+    private Material GetMaterialFromEdgeType(string edgeType)
+    {
+        switch (edgeType)
+        {
+            case "dotted_gray_arrow":
+                return dottedGrayArrowMat;
+            case "Ijk_Boring_true":
+                return trueArrowMat;
+            case "Ijk_Boring_false":
+                return falseArrowMat;
+            case "Ijk_Boring_single":
+                return boringSingleArrowMat;
+            case "Ijk_Ret":
+                return retArrowMat;
+            case "Ijk_Call":
+                return callArrowMat;
+            default:
+                return defaultMat;
+        }
+    }
+
+    private void CreateGraphEdges(List<Edge> edges, bool isBetweenFunctions = false)
     {
         foreach (Edge edge in edges)
         {
-            Vector3 fromCenter = edge.from.transform.position;
-            Vector3 toCenter = edge.to.transform.position;
+            Vector3 fromCenter = edge.from.transform.GetChild(2).GetChild(0).position;
+            Vector3 toCenter = edge.to.transform.GetChild(2).GetChild(0).position;
 
             Vector3 fromEdgePoint = FindClosestIntersectionPoint(fromCenter, toCenter, edge.from);
             Vector3 toEdgePoint = FindClosestIntersectionPoint(toCenter, fromCenter, edge.to);
@@ -359,8 +388,11 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
             GameObject edgeObj = Instantiate(edgePrefab, Vector3.zero, Quaternion.identity);
             Arrow.ArrowRenderer animatedArrowRenderer = edgeObj.GetComponent<Arrow.ArrowRenderer>();
             animatedArrowRenderer.SetPositions(fromEdgePoint, toEdgePoint);
-
-            Debug.Log("==== add edge obj into edge");
+            if (isBetweenFunctions) animatedArrowRenderer.SetHeight(arrowHeightBetweenFunctions);
+            ArrowController arrowController = edgeObj.GetComponent<ArrowController>();
+            Material mat = GetMaterialFromEdgeType(edge.type);
+            arrowController.SetMaterial(mat);
+            // Debug.Log("==== add edge obj into edge");
             edge.edgeObj = edgeObj;
         }
     }

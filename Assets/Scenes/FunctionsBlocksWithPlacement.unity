@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -364,6 +364,15 @@ MonoBehaviour:
   emptyHeight: 3
   instructionHeight: 0.76
   movingThreshold: 2
+  arrowHeightBetweenFunctions: 3
+  falseArrowMat: {fileID: 2100000, guid: 2a932944f6500a94dbeca3d2958391d2, type: 2}
+  trueArrowMat: {fileID: 2100000, guid: afd3ba296a4004157a510eeb31ddd54e, type: 2}
+  boringSingleArrowMat: {fileID: 2100000, guid: d97d797c439a18d47b6c77ea30bee537,
+    type: 2}
+  callArrowMat: {fileID: 2100000, guid: 274998ede0b1ce9459948c0a42620979, type: 2}
+  retArrowMat: {fileID: 2100000, guid: f1596fb40cb32e14ba34892b0dec0fa3, type: 2}
+  dottedGrayArrowMat: {fileID: 2100000, guid: 6da04e901f9a86542a0d4f6392117589, type: 2}
+  defaultMat: {fileID: 2100000, guid: afd3ba296a4004157a510eeb31ddd54e, type: 2}
 --- !u!1 &1534768125
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,8 +579,11 @@ MonoBehaviour:
   zoomLerpSpeed: 10
   keyboardPanSpeed: 5
   focusLerpSpeed: 10
+  focusZoomAmount: 8
   activeKeyboardMovement: 0
   blockRotationSpeed: 6
+  blockDeformHeightAmount: 3
+  blockDeformScaleAmount: 1.8
   IsometricCameraAngles: {x: 0.25660482, y: -0.12607862, z: 0.033782665, w: 0.9576622}
 --- !u!1 &2053725745
 GameObject:
