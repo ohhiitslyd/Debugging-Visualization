@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -10,8 +11,13 @@ public class CameraController : MonoBehaviour
     [SerializeField] float zoomLerpSpeed = 10f; // Speed at which zoom lerps
     [SerializeField] float keyboardPanSpeed = 5f; // Speed for WASD navigation
     [SerializeField] float focusLerpSpeed = 9f; // Speed at which focus lerps
+    [SerializeField] float focusZoomAmount = 8f; // Speed at which focus lerps
+
     [SerializeField] bool activeKeyboardMovement = false; // Add this line
     [SerializeField] float blockRotationSpeed = 6f; // Add this line
+    [SerializeField] float blockDeformHeightAmount = 5f;
+    [SerializeField] float blockDeformScaleAmount = 1.8f;
+
 
 
     private Camera cam;
@@ -103,6 +109,8 @@ public class CameraController : MonoBehaviour
             analyzeYRotation += rotationAmount;
             targetRotation = Quaternion.Euler(originalRotation.eulerAngles.x, analyzeYRotation, originalRotation.eulerAngles.z); // Update target rotation only on Y axis
         }
+        targetOrthographicSize = focusZoomAmount + 2f;
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetOrthographicSize, Time.deltaTime * focusLerpSpeed);
     }
 
     private void HandleDefaultState()
@@ -193,7 +201,7 @@ public class CameraController : MonoBehaviour
         originalOrthographicSize = cam.orthographicSize;
 
         targetPosition = blockPosition;
-        targetOrthographicSize = 8f; // Fixed orthographic size for focusing on blocks
+        targetOrthographicSize = focusZoomAmount; // Fixed orthographic size for focusing on blocks
         isFocusing = true;
 
         StateManager.Instance.SetCameraState(StateManager.CameraState.Focus);
@@ -213,11 +221,42 @@ public class CameraController : MonoBehaviour
     {
         analyzeYRotation = transform.eulerAngles.y; // Store the current Y rotation as the starting analyze Y rotation
         StateManager.Instance.SetCameraState(StateManager.CameraState.Analyze);
+        GameObject cube = StateManager.Instance.GetBlockCubeInFocus();
+        GameObject cubeCanvas = StateManager.Instance.GetBlockCanvasInFocus();
+        DeformBlock_IntoAnalyzeMode(cube, cubeCanvas);
     }
 
     public void ExitAnalyzeMode()
     {
         StateManager.Instance.SetCameraState(StateManager.CameraState.Focus);
         targetRotation = originalRotation; // Reset rotation to original
+        targetOrthographicSize = focusZoomAmount;
+        GameObject cube = StateManager.Instance.GetBlockCubeInFocus();
+        GameObject cubeCanvas = StateManager.Instance.GetBlockCanvasInFocus();
+        DeformBlock_OutOfAnalyzeMode(cube, cubeCanvas);
+    }
+
+    public void DeformBlock_IntoAnalyzeMode(GameObject cube, GameObject cubeCanvas){
+        if (cube != null){
+            cube.transform.position = new Vector3(cube.transform.position.x, cube.transform.position.y + blockDeformHeightAmount, cube.transform.position.z);
+            // cube.transform.localScale = new Vector3(cube.transform.localScale.x, cube.transform.localScale.y * blockDeformScaleAmount, cube.transform.localScale.z);
+        }
+
+        if (cubeCanvas != null) {
+            cubeCanvas.transform.position = new Vector3(cubeCanvas.transform.position.x, cubeCanvas.transform.position.y + blockDeformHeightAmount, cubeCanvas.transform.position.z);
+            // cubeCanvas.transform.localScale = new Vector3(cubeCanvas.transform.localScale.x, cubeCanvas.transform.localScale.y * blockDeformScaleAmount, cubeCanvas.transform.localScale.z);
+        }
+    }
+
+    public void DeformBlock_OutOfAnalyzeMode(GameObject cube, GameObject cubeCanvas){
+        if (cube != null){
+            cube.transform.position = new Vector3(cube.transform.position.x, cube.transform.position.y - blockDeformHeightAmount, cube.transform.position.z);
+            // cube.transform.localScale = new Vector3(cube.transform.localScale.x, cube.transform.localScale.y / blockDeformScaleAmount, cube.transform.localScale.z);
+        }
+
+        if (cubeCanvas != null) {
+            cubeCanvas.transform.position = new Vector3(cubeCanvas.transform.position.x, cubeCanvas.transform.position.y - blockDeformHeightAmount, cubeCanvas.transform.position.z);
+            // cubeCanvas.transform.localScale = new Vector3(cubeCanvas.transform.localScale.x, cubeCanvas.transform.localScale.y / blockDeformScaleAmount, cubeCanvas.transform.localScale.z);
+        }
     }
 }
