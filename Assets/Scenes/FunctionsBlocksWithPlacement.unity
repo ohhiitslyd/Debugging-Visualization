@@ -253,7 +253,7 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
@@ -434,6 +434,7 @@ GameObject:
   - component: {fileID: 1661925485}
   - component: {fileID: 1661925484}
   - component: {fileID: 1661925488}
+  - component: {fileID: 1661925489}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -585,6 +586,18 @@ MonoBehaviour:
   blockDeformHeightAmount: 3
   blockDeformScaleAmount: 1.8
   IsometricCameraAngles: {x: 0.25660482, y: -0.12607862, z: 0.033782665, w: 0.9576622}
+--- !u!114 &1661925489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661925483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13a127aa5d8e54baeafd51083b0b496b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2053725745
 GameObject:
   m_ObjectHideFlags: 0
