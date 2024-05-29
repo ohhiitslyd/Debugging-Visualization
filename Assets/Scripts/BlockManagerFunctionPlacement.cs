@@ -24,15 +24,13 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
     public Dictionary<Function, List<GameObject>> functionToNodes;
     public Dictionary<int, GameObject> functionAddrToFunctionGameObject;
     public Dictionary<GameObject, GameObject> functionPanelGameObjectDict; // function gameobject to panel gameobject
-    public List<NodeEdge> edgesBetweenFunctions;
+    public List<Edge> edgesBetweenFunctions;
 
     [SerializeField] private float emptyHeight = 3f;
     [SerializeField] private float instructionHeight = 0.5f;
     private bool updatingNodes;
-
-    private string dottedGrayArrowEdgeType = "dotted_gray_arrow";
-
     [SerializeField] private float movingThreshold = 0.01f;
+    [SerializeField] private float arrowHeightBetweenFunctions = 3f;
 
     float UpdateGraphLayout(List<GameObject> nodes, List<Edge> edges, float repulsiveForceConstant, float springForceConstant, float damping, float idealSpringLength)
     {
@@ -82,7 +80,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         functionToNodes = new Dictionary<Function, List<GameObject>>();
         addrToFunction = Function.AddressToFunctionFromGraphStructure(graphStructure);
         functionAddrToFunctionGameObject = new Dictionary<int, GameObject>();
-        edgesBetweenFunctions = new List<NodeEdge>();
+        edgesBetweenFunctions = new List<Edge>();
         functionPanelGameObjectDict = new Dictionary<GameObject, GameObject>();
 
         List<Function> functions = addrToFunction.Values.ToList();
@@ -160,26 +158,34 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
                 GameObject nodeObj = functionNodes[i];
                 GraphNode node = nodeObj.GetComponent<NodeGameObject>().node;
                 List<Connection> successors = graphStructure.getSuccessors(node.address);
-                foreach (Connection succ in successors)
+                for (int j = 0; j < successors.Count; j++)
                 {
+                    Connection succ = successors[j];
+                    if (!StateManager.Instance.sceneBlockDict.ContainsKey(succ.target)) continue;
+                    GameObject to = StateManager.Instance.sceneBlockDict[succ.target];
                     if (node.function_address != graphStructure.nodes[succ.target].function_address)
                     {
-                        edgesBetweenFunctions.Add(new NodeEdge
+                        edgesBetweenFunctions.Add(new Edge
                         {
-                            from = node,
-                            to = graphStructure.nodes[succ.target],
+                            from = nodeObj,
+                            to = to,
                             type = succ.type,
                         });
                         continue;
                     }
+                    string boring_type = "Ijk_Boring";
+                    if (successors.Count == 1) boring_type += "_single";
+                    else if (j == 0) boring_type += "_true";
+                    else boring_type += "_false";
                     Edge edge = new Edge
                     {
                         from = nodeObj,
-                        to = StateManager.Instance.sceneBlockDict[succ.target],
-                        type = succ.type,
+                        to = to,
+                        type = boring_type,
                     };
                     functionEdges.Add(edge);
                 }
+                if (successors.Count > 0 && successors[0].type == "Ijk_Boring") { }
 
                 if (i == 0) continue;
 
@@ -202,7 +208,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
                     {
                         from = functionNodes[i - 1],
                         to = nodeObj,
-                        type = dottedGrayArrowEdgeType,
+                        type = "dotted_gray_arrow",
                     };
                     functionEdges.Add(edge);
                 }
@@ -211,10 +217,10 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
 
             functionToEdges[function] = functionEdges;
         }
-        foreach (Function function in functions)
-        {
-            Debug.Log($"Function: {function.name} has {function.nodes.Count} nodes and {functionToEdges[function].Count} edges");
-        }
+        // foreach (Function function in functions)
+        // {
+        //     Debug.Log($"Function: {function.name} has {function.nodes.Count} nodes and {functionToEdges[function].Count} edges");
+        // }
 
 
         StartCoroutine(MakeGraph());
@@ -231,6 +237,15 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         // TODO: - flora. it is ugly....
         yield return new WaitForSeconds(1f);
         yield return new WaitUntil(() => placeEdges());
+        yield return new WaitForSeconds(1f);
+        // foreach (Edge edge in edgesBetweenFunctions)
+        // {
+        //     Debug.Log($"Edge from {edge.from.GetComponent<NodeGameObject>().node.name} to {edge.to.GetComponent<NodeGameObject>().node.name} of type {edge.type}");
+        // }
+
+        CreateGraphEdges(edgesBetweenFunctions, true);
+
+
     }
 
     bool placeEdges()
@@ -252,10 +267,12 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
             functionObj.transform.position = Vector3.Scale(UnityEngine.Random.onUnitSphere * UnityEngine.Random.Range(0f, 0.1f), new Vector3(1f, 0f, 1f));
             functionObjs.Add(functionObj);
         }
-        foreach (NodeEdge edge in edgesBetweenFunctions)
+        foreach (Edge edge in edgesBetweenFunctions)
         {
-            int fa1 = edge.from.function_address;
-            int fa2 = edge.to.function_address;
+            GraphNode node1 = edge.from.GetComponent<NodeGameObject>().node;
+            GraphNode node2 = edge.to.GetComponent<NodeGameObject>().node;
+            int fa1 = node1.function_address;
+            int fa2 = node2.function_address;
             if (!functionAddrToFunctionGameObject.ContainsKey(fa1) || !functionAddrToFunctionGameObject.ContainsKey(fa2)) continue;
             GameObject f1 = functionAddrToFunctionGameObject[fa1];
             GameObject f2 = functionAddrToFunctionGameObject[fa2];
@@ -284,7 +301,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
             functionObj.transform.position = currPlacement;
             currPlacement += new Vector3(panel.transform.localScale.x / 2, 0, 0);
         }
-        Debug.Log("Function placement complete");
+        // Debug.Log("Function placement complete");
         return true;
     }
 
@@ -329,38 +346,73 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
         return true;
     }
 
-    private void CreateGraphEdges(List<Edge> edges)
+    [SerializeField] private Material falseArrowMat;
+    [SerializeField] private Material trueArrowMat;
+    [SerializeField] private Material boringSingleArrowMat;
+    [SerializeField] private Material callArrowMat;
+    [SerializeField] private Material retArrowMat;
+    [SerializeField] private Material dottedGrayArrowMat;
+    [SerializeField] private Material defaultMat;
+
+    private Material GetMaterialFromEdgeType(string edgeType)
+    {
+        switch (edgeType)
+        {
+            case "dotted_gray_arrow":
+                return dottedGrayArrowMat;
+            case "Ijk_Boring_true":
+                return trueArrowMat;
+            case "Ijk_Boring_false":
+                return falseArrowMat;
+            case "Ijk_Boring_single":
+                return boringSingleArrowMat;
+            case "Ijk_Ret":
+                return retArrowMat;
+            case "Ijk_Call":
+                return callArrowMat;
+            default:
+                return defaultMat;
+        }
+    }
+
+    private void CreateGraphEdges(List<Edge> edges, bool isBetweenFunctions = false)
     {
         foreach (Edge edge in edges)
         {
-            Vector3 fromCenter = edge.from.transform.position;
-            Vector3 toCenter = edge.to.transform.position;
+            Vector3 fromCenter = edge.from.transform.GetChild(2).GetChild(0).position;
+            Vector3 toCenter = edge.to.transform.GetChild(2).GetChild(0).position;
 
-            Vector3 fromEdgePoint = FindClosestIntersectionPoint(fromCenter, toCenter, edge.from.transform.localScale * 0.5f);
-            Vector3 toEdgePoint = FindClosestIntersectionPoint(toCenter, fromCenter, edge.to.transform.localScale * 0.5f);
+            Vector3 fromEdgePoint = FindClosestIntersectionPoint(fromCenter, toCenter, edge.from);
+            Vector3 toEdgePoint = FindClosestIntersectionPoint(toCenter, fromCenter, edge.to);
 
             GameObject edgeObj = Instantiate(edgePrefab, Vector3.zero, Quaternion.identity);
             Arrow.ArrowRenderer animatedArrowRenderer = edgeObj.GetComponent<Arrow.ArrowRenderer>();
             animatedArrowRenderer.SetPositions(fromEdgePoint, toEdgePoint);
-
-            Debug.Log("==== add edge obj into edge");
+            if (isBetweenFunctions) animatedArrowRenderer.SetHeight(arrowHeightBetweenFunctions);
+            ArrowController arrowController = edgeObj.GetComponent<ArrowController>();
+            Material mat = GetMaterialFromEdgeType(edge.type);
+            arrowController.SetMaterial(mat);
+            // Debug.Log("==== add edge obj into edge");
             edge.edgeObj = edgeObj;
         }
     }
 
-    private Vector3 FindClosestIntersectionPoint(Vector3 center, Vector3 target, Vector3 halfExtents)
+    private Vector3 FindClosestIntersectionPoint(Vector3 center, Vector3 target, GameObject fromObj)
     {
-        Vector3 direction = (target - center).normalized;
+        Vector3 direction = (center - target).normalized;
         float distance = Vector3.Distance(center, target);
 
-        if (Physics.Raycast(center, direction, out RaycastHit hit, distance))
+        RaycastHit[] hits = Physics.RaycastAll(target, direction, distance);
+
+        foreach (RaycastHit hit in hits)
         {
-            return hit.point;
+            if (hit.collider.gameObject.transform.parent.parent.gameObject == fromObj)
+            {
+                return hit.point;
+            }
         }
-        else
-        {
-            return target;
-        }
+
+        return center;
     }
 
     float nodeHeight(int numInstructions)
@@ -391,7 +443,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
             for (int i = 0; i < nodeObjs.Count; i++)
             {
                 GameObject nodeObj = nodeObjs[i];
-                Debug.Log(nodeObj.transform.position.z);
+                // Debug.Log(nodeObj.transform.position.z);
                 NodeGameObject nodeScript = nodeObj.GetComponent<NodeGameObject>();
                 int numInstructions = nodeScript.node.instructions.Count;
                 Transform cubeParentTransform = nodeObj.transform.GetChild(2);
@@ -517,7 +569,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
 
         foreach (GraphNode node in graphStructure.nodes.Values)
         {
-            Debug.Log(node.name);
+            // Debug.Log(node.name);
 
             int row = index / rowLength;
             int col = index % rowLength;
@@ -530,6 +582,7 @@ public class BlockManagerFunctionPlacement : MonoBehaviour
 
             obj.GetComponent<SceneBlockObj>().SetGraphNode(node);
             obj.GetComponent<NodeGameObject>().SetNode(node);
+
             obj.SetActive(true);
 
             index++;

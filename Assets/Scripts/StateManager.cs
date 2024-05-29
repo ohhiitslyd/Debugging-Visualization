@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StateManager : MonoBehaviour
@@ -63,4 +64,43 @@ public class StateManager : MonoBehaviour
     {
         currentCameraState = newState;
     }
+
+    public GameObject GetBlockCubeInFocus()
+    {
+        if (selectedBlock == -1)
+        {
+            return null;
+        }
+
+        foreach (int currKey in StateManager.Instance.sceneBlockDict.Keys)
+        {
+            if (currKey == selectedBlock)
+            {
+                GameObject currNode = StateManager.Instance.sceneBlockDict[currKey];
+                GameObject cube = currNode.transform.GetChild(2).GetChild(0).gameObject;
+                return cube;
+            }
+        }
+        return null;
+    }
+
+    public GameObject GetBlockCanvasInFocus()
+    {
+        if (selectedBlock == -1)
+        {
+            return null;
+        }
+
+        foreach (int currKey in StateManager.Instance.sceneBlockDict.Keys)
+        {
+            if (currKey == selectedBlock)
+            {
+                GameObject currNode = StateManager.Instance.sceneBlockDict[currKey];
+                GameObject cube = currNode.transform.GetChild(0).GetChild(0).gameObject;
+                return cube;
+            }
+        }
+        return null;
+    }
+
 }

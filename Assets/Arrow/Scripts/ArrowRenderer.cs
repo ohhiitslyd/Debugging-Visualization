@@ -8,7 +8,7 @@ namespace Arrow
         [SerializeField] float height = 0.5f;
         [SerializeField] float segmentLength = 0.5f;
 
-        [Space] [SerializeField] protected Vector3 start;
+        [Space][SerializeField] protected Vector3 start;
         [SerializeField] protected Vector3 end;
         [SerializeField] protected Vector3 upwards = Vector3.up;
 
@@ -23,6 +23,12 @@ namespace Arrow
         {
             start = startPosition;
             end = endPosition;
+            Update();
+        }
+
+        public void SetHeight(float newHeight)
+        {
+            height = newHeight;
             Update();
         }
 
