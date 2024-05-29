@@ -101,7 +101,9 @@ public class CameraController : MonoBehaviour
         {
             float rotationAmount = horizontalInput * blockRotationSpeed;
             analyzeYRotation += rotationAmount;
-            targetRotation = Quaternion.Euler(originalRotation.eulerAngles.x, analyzeYRotation, originalRotation.eulerAngles.z); // Update target rotation only on Y axis
+
+            //targetRotation = Quaternion.Euler(originalRotation.eulerAngles.x, analyzeYRotation, originalRotation.eulerAngles.z); // Update target rotation only on Y axis
+            targetRotation = Quaternion.Euler(targetRotation.eulerAngles.x, analyzeYRotation, targetRotation.eulerAngles.z);
         }
     }
 
@@ -219,5 +221,10 @@ public class CameraController : MonoBehaviour
     {
         StateManager.Instance.SetCameraState(StateManager.CameraState.Focus);
         targetRotation = originalRotation; // Reset rotation to original
+    }
+
+    public void SetCurrentTargetRotation(Quaternion quaternion)
+    {
+        targetRotation = quaternion;
     }
 }
